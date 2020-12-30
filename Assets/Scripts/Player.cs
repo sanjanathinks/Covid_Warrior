@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
         //_rigidBody2D = GetComponent<Rigidbody2D>();
         _playerData = new PlayerData();
         _playerData.username = "test";
-        StartCoroutine(Download(_playerData.username, result => {
-          Debug.Log(result);
+        StartCoroutine(Download(_playerData.username, (result) => {
+          Debug.Log(result.Stringify());
         }));
     }
 

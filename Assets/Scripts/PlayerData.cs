@@ -3,9 +3,9 @@
 public class PlayerData
 {
   public string username;
-  public string classCode;
-  public string[] correct;
-  public string[] incorrect;
+  public string class_code;
+  public string[] questions_correct;
+  public string[] questions_incorrect;
 
   public string Stringify()
   {
