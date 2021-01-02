@@ -42,6 +42,14 @@ public class Player : MonoBehaviour
             }
           }));
         }
+
+        if (Input.GetKeyDown("left"))
+        {
+          _playerData.class_code = "abcde";
+          StartCoroutine(Update(_playerData.Stringify(), updated => {
+            Debug.Log(updated);
+          }));
+        }
     }
 
     IEnumerator Download(string id, System.Action<PlayerData> callback = null)
@@ -70,34 +78,60 @@ public class Player : MonoBehaviour
             }
           }
       }
-  }
+    }
 
-  IEnumerator Upload(string profile, System.Action<string> callback = null)
-  {
-    Debug.Log(profile);
-      using (UnityWebRequest request = new UnityWebRequest("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/addUser", "POST"))
-      {
-          request.SetRequestHeader("Content-Type", "application/json");
-          byte[] bodyRaw = Encoding.UTF8.GetBytes(profile);
-          request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-          request.downloadHandler = new DownloadHandlerBuffer();
-          yield return request.SendWebRequest();
+    IEnumerator Upload(string profile, System.Action<string> callback = null)
+    {
+        Debug.Log(profile);
+        using (UnityWebRequest request = new UnityWebRequest("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/addUser", "POST"))
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(profile);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            yield return request.SendWebRequest();
 
-          if (request.isNetworkError || request.isHttpError)
-          {
-              Debug.Log(request.error);
-              if(callback != null)
-              {
-                  callback.Invoke("false");
-              }
-          }
-          else
-          {
-              if(callback != null)
-              {
-                  callback.Invoke(request.downloadHandler.text);
-              }
-          }
-      }
-  }
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+                if(callback != null)
+                {
+                    callback.Invoke("false");
+                }
+            }
+            else
+            {
+                if(callback != null)
+                {
+                    callback.Invoke(request.downloadHandler.text);
+                }
+            }
+        }
+    }
+
+    IEnumerator Update(string profile, System.Action<string> callback = null)
+    {
+        Debug.Log(profile);
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(profile);
+        using (UnityWebRequest request = UnityWebRequest.Put("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/updateUser", bodyRaw))
+        {
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+                if(callback != null)
+                {
+                    callback.Invoke("false");
+                }
+            }
+            else
+            {
+                if(callback != null)
+                {
+                    callback.Invoke(request.downloadHandler.text);
+                }
+            }
+        }
+    }
 }
