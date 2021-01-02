@@ -6,8 +6,14 @@ public class QuestionData
   public string question;
   public string type;
   public int level;
+  public string a;
+  public string b;
+  public string c;
+  public string d;
   public string correct;
-  public string[] incorrect;
+  public string solution;
+  public int bridges_unit;
+  public string nc_standard;
 
   public string Stringify()
   {
