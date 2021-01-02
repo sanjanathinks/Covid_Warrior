@@ -16,9 +16,9 @@ public class Player : MonoBehaviour
         //_rigidBody2D = GetComponent<Rigidbody2D>();
         _playerData = new PlayerData();
         _playerData.username = "example";
-        /*StartCoroutine(Download(_playerData.username, result => {
+        StartCoroutine(Download(_playerData.username, result => {
           Debug.Log(result.Stringify());
-        }));*/
+        }));
     }
 
     void Update()
@@ -50,6 +50,13 @@ public class Player : MonoBehaviour
             Debug.Log(updated);
           }));
         }
+    }
+
+    public string getCorrect() {
+      if (_playerData.questions_correct != null) {
+        return string.Join(",", _playerData.questions_correct);
+      }
+      else return null;
     }
 
     IEnumerator Download(string id, System.Action<PlayerData> callback = null)
