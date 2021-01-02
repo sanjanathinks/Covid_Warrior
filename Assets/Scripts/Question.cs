@@ -25,7 +25,8 @@ public class Question : MonoBehaviour
         _questionData.type = "math";
         _questionData.level = 1;
         StartCoroutine(Download(_questionData.type, _questionData.level, ans_correct, result => {
-          Debug.Log(result.Stringify());
+          _questionData = result;
+          Debug.Log(_questionData.Stringify());
         }));
       }
     }

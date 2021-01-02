@@ -15,9 +15,10 @@ public class Player : MonoBehaviour
     {
         //_rigidBody2D = GetComponent<Rigidbody2D>();
         _playerData = new PlayerData();
-        _playerData.username = "example";
+        _playerData.username = "test";
         StartCoroutine(Download(_playerData.username, result => {
-          Debug.Log(result.Stringify());
+          _playerData = result;
+          Debug.Log(_playerData.Stringify());
         }));
     }
 
@@ -53,7 +54,7 @@ public class Player : MonoBehaviour
     }
 
     public string getCorrect() {
-      if (_playerData.questions_correct != null) {
+      if (_playerData.questions_correct != null && _playerData.questions_correct.Length > 0) {
         return string.Join(",", _playerData.questions_correct);
       }
       else return null;
