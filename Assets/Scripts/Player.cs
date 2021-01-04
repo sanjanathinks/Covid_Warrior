@@ -3,6 +3,7 @@ using System.Text;
 using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -15,6 +16,16 @@ public class Player : MonoBehaviour
     private PlayerData _playerData;
     private List<string> qCorrect;
     private List<string> qIncorrect;
+
+    void Awake() {
+      GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
+
+      if (objs.Length > 1)
+      {
+          Destroy(this.gameObject);
+      }
+      DontDestroyOnLoad(this.gameObject);
+    }
 
     void Start()
     {
@@ -59,6 +70,7 @@ public class Player : MonoBehaviour
       if (newUser && _playerData.class_code != null) {
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
+          SceneManager.LoadScene("Game");
         }));
       }
       else if (newUser) {
