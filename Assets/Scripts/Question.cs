@@ -20,15 +20,37 @@ public class Question : MonoBehaviour
     }
 
     void FixedUpdate() {
-      if (Input.GetKeyDown("up")) {
-        string ans_correct = player.GetComponent<Player>().getCorrect();
-        _questionData.type = "math";
-        _questionData.level = 1;
-        StartCoroutine(Download(_questionData.type, _questionData.level, ans_correct, result => {
-          _questionData = result;
-          Debug.Log(_questionData.Stringify());
-        }));
-      }
+
+    }
+
+    public void generateQuestion(string type, int level) {
+      string ans_correct = player.GetComponent<Player>().getCorrect();
+      _questionData.type = type;
+      _questionData.level = level;
+      StartCoroutine(Download(_questionData.type, _questionData.level, ans_correct, result => {
+        _questionData = result;
+        Debug.Log(_questionData.Stringify());
+      }));
+    }
+
+    public string getQuestion() {
+      return _questionData.question;
+    }
+
+    public string getA() {
+      return _questionData.a;
+    }
+
+    public string getB() {
+      return _questionData.b;
+    }
+
+    public string getC() {
+      return _questionData.c;
+    }
+
+    public string getD() {
+      return _questionData.d;
     }
 
     IEnumerator Download(string type, int level, string correct, System.Action<QuestionData> callback = null)

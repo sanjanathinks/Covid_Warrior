@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Text;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour
 {
@@ -12,11 +13,15 @@ public class Player : MonoBehaviour
     //private Rigidbody2D _rigidBody2D;
     private Vector2 _movement;
     private PlayerData _playerData;
+    private List<string> qCorrect;
+    private List<string> qIncorrect;
 
     void Start()
     {
         //_rigidBody2D = GetComponent<Rigidbody2D>();
         _playerData = new PlayerData();
+        qCorrect = new List<string>();
+        qIncorrect = new List<string>();
     }
 
     void Update()
@@ -26,13 +31,14 @@ public class Player : MonoBehaviour
 
     void FixedUpdate() {
         // Physics related updates here ...
-        if (Input.GetKeyDown("left"))
-        {
-          _playerData.class_code = "abcde";
-          StartCoroutine(Update(_playerData.Stringify(), updated => {
-            Debug.Log(updated);
-          }));
-        }
+    }
+
+    public void updateUser() {
+      _playerData.questions_correct = qCorrect.ToArray();
+      _playerData.questions_incorrect = qIncorrect.ToArray();
+      StartCoroutine(Update(_playerData.Stringify(), updated => {
+        Debug.Log(updated);
+      }));
     }
 
     public void chooseUsername(string username) {
@@ -42,7 +48,6 @@ public class Player : MonoBehaviour
         if (result == null) {
           newUser = true;
         }
-        Debug.Log(newUser);
       }));
     }
 
@@ -72,6 +77,8 @@ public class Player : MonoBehaviour
         }
         else {
           _playerData = result;
+          qCorrect.AddRange(_playerData.questions_correct);
+          qIncorrect.AddRange(_playerData.questions_incorrect);
           Debug.Log(_playerData.Stringify());
         }
       }));
@@ -82,6 +89,14 @@ public class Player : MonoBehaviour
         return string.Join(",", _playerData.questions_correct);
       }
       else return null;
+    }
+
+    public void addCorrect(string q) {
+      qCorrect.Add(q);
+    }
+
+    public void addIncorrect(string q) {
+      qIncorrect.Add(q);
     }
 
     IEnumerator Download(string id, System.Action<PlayerData> callback = null)
