@@ -6,6 +6,8 @@ using System.Collections;
 public class Player : MonoBehaviour
 {
     public float speed = 1.5f;
+    public bool newUser = false;
+    public bool downloading = false;
 
     //private Rigidbody2D _rigidBody2D;
     private Vector2 _movement;
@@ -33,19 +35,33 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void signup(string username) {
+    public void chooseUsername(string username) {
       _playerData.username = username;
       StartCoroutine(Download(_playerData.username, result => {
         Debug.Log(result);
         if (result == null) {
-          StartCoroutine(Upload(_playerData.Stringify(), added => {
-            Debug.Log(added);
-          }));
+          newUser = true;
         }
-        else {
-          Debug.Log("Username already exists. Please select a different username or log in.");
-        }
+        Debug.Log(newUser);
       }));
+    }
+
+    public void enterClassCode(string classCode) {
+      _playerData.class_code = classCode;
+    }
+
+    public void signup() {
+      if (newUser && _playerData.class_code != null) {
+        StartCoroutine(Upload(_playerData.Stringify(), added => {
+          Debug.Log(added);
+        }));
+      }
+      else if (newUser) {
+        Debug.Log("Please enter a class code.");
+      }
+      else {
+        Debug.Log("Username already exists. Please select a different username or log in.");
+      }
     }
 
     public void login(string username) {
@@ -70,6 +86,7 @@ public class Player : MonoBehaviour
 
     IEnumerator Download(string id, System.Action<PlayerData> callback = null)
     {
+      downloading = true;
       using (UnityWebRequest request = UnityWebRequest.Get("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/getUser?username=" + id))
       {
           yield return request.SendWebRequest();
@@ -94,6 +111,7 @@ public class Player : MonoBehaviour
             }
           }
       }
+      downloading = false;
     }
 
     IEnumerator Upload(string profile, System.Action<string> callback = null)
