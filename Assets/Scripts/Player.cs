@@ -15,11 +15,6 @@ public class Player : MonoBehaviour
     {
         //_rigidBody2D = GetComponent<Rigidbody2D>();
         _playerData = new PlayerData();
-        _playerData.username = "test";
-        StartCoroutine(Download(_playerData.username, result => {
-          _playerData = result;
-          Debug.Log(_playerData.Stringify());
-        }));
     }
 
     void Update()
@@ -29,21 +24,6 @@ public class Player : MonoBehaviour
 
     void FixedUpdate() {
         // Physics related updates here ...
-        if (Input.GetKeyDown("space"))
-        {
-          StartCoroutine(Download(_playerData.username, result => {
-            Debug.Log(result);
-            if (result == null) {
-              StartCoroutine(Upload(_playerData.Stringify(), added => {
-                Debug.Log(added);
-              }));
-            }
-            else {
-              Debug.Log("Username already exists. Please select a different username or log in.");
-            }
-          }));
-        }
-
         if (Input.GetKeyDown("left"))
         {
           _playerData.class_code = "abcde";
@@ -51,6 +31,34 @@ public class Player : MonoBehaviour
             Debug.Log(updated);
           }));
         }
+    }
+
+    public void signup(string username) {
+      _playerData.username = username;
+      StartCoroutine(Download(_playerData.username, result => {
+        Debug.Log(result);
+        if (result == null) {
+          StartCoroutine(Upload(_playerData.Stringify(), added => {
+            Debug.Log(added);
+          }));
+        }
+        else {
+          Debug.Log("Username already exists. Please select a different username or log in.");
+        }
+      }));
+    }
+
+    public void login(string username) {
+      _playerData.username = username;
+      StartCoroutine(Download(_playerData.username, result => {
+        if (result == null) {
+          Debug.Log("No registered user with this username. Please sign up or use a different username.");
+        }
+        else {
+          _playerData = result;
+          Debug.Log(_playerData.Stringify());
+        }
+      }));
     }
 
     public string getCorrect() {
