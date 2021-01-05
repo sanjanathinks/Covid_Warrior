@@ -6,6 +6,7 @@ public class PlayerData
   public string class_code;
   public string[] questions_correct;
   public string[] questions_incorrect;
+  public double progress;
 
   public string Stringify()
   {

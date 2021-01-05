@@ -81,8 +81,11 @@ public class Player : MonoBehaviour
       }
     }
 
-    public void login(string username) {
+    public void loginUsername(string username) {
       _playerData.username = username;
+    }
+
+    public void login() {
       StartCoroutine(Download(_playerData.username, result => {
         if (result == null) {
           Debug.Log("No registered user with this username. Please sign up or use a different username.");
@@ -92,6 +95,7 @@ public class Player : MonoBehaviour
           qCorrect.AddRange(_playerData.questions_correct);
           qIncorrect.AddRange(_playerData.questions_incorrect);
           Debug.Log(_playerData.Stringify());
+          SceneManager.LoadScene("Game");
         }
       }));
     }

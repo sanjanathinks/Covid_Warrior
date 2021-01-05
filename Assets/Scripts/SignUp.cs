@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class SignUp : MonoBehaviour
 {
-    public GameObject player;
+    private GameObject player;
     // Start is called before the first frame update
     void Start()
     {
-
+      player = GameObject.Find("player");
     }
 
     // Update is called once per frame
