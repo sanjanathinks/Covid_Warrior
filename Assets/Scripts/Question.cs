@@ -22,11 +22,14 @@ public class Question : MonoBehaviour
 
     void FixedUpdate() {
       if (Input.GetKeyDown("up")) {
-        generateQuestion("math", 1);
+        generateQuestion("math", "beginner");
+      }
+      else if (Input.GetKeyDown("down")) {
+        generateQuestion("math", "intermediate");
       }
     }
 
-    public void generateQuestion(string type, int level) {
+    public void generateQuestion(string type, string level) {
       if (!generating) {
         string ans_correct = player.GetComponent<Player>().getCorrect();
         _questionData.type = type;
@@ -58,7 +61,7 @@ public class Question : MonoBehaviour
       return _questionData.d;
     }
 
-    IEnumerator Download(string type, int level, string correct, System.Action<QuestionData> callback = null)
+    IEnumerator Download(string type, string level, string correct, System.Action<QuestionData> callback = null)
     {
       generating = true;
       string url;
