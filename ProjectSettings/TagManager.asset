@@ -13,9 +13,9 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
+  - player
+  - Obstacle
+  - Camera Bounds
   - 
   - 
   - 
@@ -40,4 +40,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background0
+    uniqueID: 3581675349
+    locked: 0
+  - name: Background1
+    uniqueID: 1107541047
+    locked: 0
+  - name: Background2
+    uniqueID: 3673936645
+    locked: 0
+  - name: Player
+    uniqueID: 1572813799
+    locked: 0
+  - name: Foreground
+    uniqueID: 4114105731
     locked: 0
