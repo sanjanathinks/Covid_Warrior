@@ -54,7 +54,6 @@ public class ChoiceScript : MonoBehaviour
         ChoiceMade = 0;
     }
     public void ChoiceOption1() {
-        //Debug.Log(TextBox.GetComponent<TextMeshPro>());
         TextBox.text = "Bad choice!";
         ChoiceMade = 1;
     }

@@ -21,12 +21,7 @@ public class Question : MonoBehaviour
     }
 
     void FixedUpdate() {
-/*      if (Input.GetKeyDown("up")) {
-        generateQuestion("math", "beginner");
-      }
-      else if (Input.GetKeyDown("down")) {
-        generateQuestion("math", "intermediate");
-      }*/
+
     }
 
     public void generateQuestion(string type, string level) {

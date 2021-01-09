@@ -115,6 +115,10 @@ public class Player : MonoBehaviour
       qIncorrect.Add(q);
     }
 
+    public string getUsername() {
+      return _playerData.username;
+    }
+
     IEnumerator Download(string id, System.Action<PlayerData> callback = null)
     {
       downloading = true;
