@@ -29,15 +29,6 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
-      if (Input.GetKeyDown("up")) {
-        this.GetComponent<Question>().generateQuestion("math", "beginner");
-        changed = true;
-      }
-      else if (Input.GetKeyDown("down")) {
-        this.GetComponent<Question>().generateQuestion("math", "intermediate");
-        changed = true;
-      }
-
       if (this.GetComponent<Question>().getQuestion() != null && TextBox.text.Equals(original) && changed) {
         TextBox.text = this.GetComponent<Question>().getQuestion();
         aText.text = this.GetComponent<Question>().getA();
@@ -47,6 +38,11 @@ public class ChoiceScript : MonoBehaviour
         changed = false;
         original = TextBox.text;
       }
+    }
+
+    public void newQuestion() {
+      this.GetComponent<Question>().generateQuestion("math", "intermediate");
+      changed = true;
     }
 
     public void ChoiceOption0() {
