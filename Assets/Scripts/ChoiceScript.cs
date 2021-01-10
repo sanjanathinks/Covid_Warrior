@@ -11,17 +11,16 @@ public class ChoiceScript : MonoBehaviour
     public GameObject Choice02;
     public GameObject Choice03;
     public GameObject Choice04;
-    public int ChoiceMade;
+    public bool ChoiceMade;
 
     private TextMeshProUGUI aText;
     private TextMeshProUGUI bText;
     private TextMeshProUGUI cText;
     private TextMeshProUGUI dText;
-    private string original;
     private bool changed;
 
     void Start() {
-      original = TextBox.text;
+      ChoiceMade = false;
       aText = Choice01.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       bText = Choice02.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       cText = Choice03.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
@@ -29,45 +28,47 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
-      if (this.GetComponent<Question>().getQuestion() != null && TextBox.text.Equals(original) && changed) {
+      if (this.GetComponent<Question>().getQuestion() != null && !TextBox.text.Equals(this.GetComponent<Question>().getQuestion()) && changed) {
+        ChoiceMade = false;
         TextBox.text = this.GetComponent<Question>().getQuestion();
         aText.text = this.GetComponent<Question>().getA();
         bText.text = this.GetComponent<Question>().getB();
         cText.text = this.GetComponent<Question>().getC();
         dText.text = this.GetComponent<Question>().getD();
         changed = false;
-        original = TextBox.text;
       }
     }
 
     public void newQuestion() {
+      //TODO: will want this to pull the parameters from the level you're on or the player you are
       this.GetComponent<Question>().generateQuestion("math", "intermediate");
       changed = true;
     }
 
-    public void ChoiceOption0() {
+    public void ChoiceOption(string choice) {
+      Debug.Log(choice);
+      Debug.Log(this.GetComponent<Question>().correctAnswer());
+      if (choice.Equals(this.GetComponent<Question>().correctAnswer())) {
         TextBox.text = "Good choice!";
-        ChoiceMade = 0;
-    }
-    public void ChoiceOption1() {
+      }
+      else {
         TextBox.text = "Bad choice!";
-        ChoiceMade = 1;
-    }
-    public void ChoiceOption2() {
-        TextBox.text = "Bad choice!";
-        ChoiceMade = 2;
-    }
-    public void ChoiceOption3() {
-        TextBox.text = "Bad choice!";
-        ChoiceMade = 3;
+      }
+      ChoiceMade = true;
     }
 
     void Update() {
-        if (ChoiceMade >= 0) {
+        if (ChoiceMade) {
             Choice01.SetActive(false);
             Choice02.SetActive(false);
             Choice03.SetActive(false);
             Choice04.SetActive(false);
+        }
+        else {
+          Choice01.SetActive(true);
+          Choice02.SetActive(true);
+          Choice03.SetActive(true);
+          Choice04.SetActive(true);
         }
     }
 

@@ -56,6 +56,10 @@ public class Question : MonoBehaviour
       return _questionData.d;
     }
 
+    public string correctAnswer() {
+      return _questionData.correct;
+    }
+
     IEnumerator Download(string type, string level, string correct, System.Action<QuestionData> callback = null)
     {
       generating = true;
