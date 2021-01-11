@@ -13,12 +13,47 @@ public class ChoiceScript : MonoBehaviour
     public GameObject Choice04;
     public int ChoiceMade;
 
+    private TextMeshProUGUI aText;
+    private TextMeshProUGUI bText;
+    private TextMeshProUGUI cText;
+    private TextMeshProUGUI dText;
+    private string original;
+    private bool changed;
+
+    void Start() {
+      original = TextBox.text;
+      aText = Choice01.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
+      bText = Choice02.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
+      cText = Choice03.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
+      dText = Choice04.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
+    }
+
+    void FixedUpdate() {
+      if (Input.GetKeyDown("up")) {
+        this.GetComponent<Question>().generateQuestion("math", "beginner");
+        changed = true;
+      }
+      else if (Input.GetKeyDown("down")) {
+        this.GetComponent<Question>().generateQuestion("math", "intermediate");
+        changed = true;
+      }
+
+      if (this.GetComponent<Question>().getQuestion() != null && TextBox.text.Equals(original) && changed) {
+        TextBox.text = this.GetComponent<Question>().getQuestion();
+        aText.text = this.GetComponent<Question>().getA();
+        bText.text = this.GetComponent<Question>().getB();
+        cText.text = this.GetComponent<Question>().getC();
+        dText.text = this.GetComponent<Question>().getD();
+        changed = false;
+        original = TextBox.text;
+      }
+    }
+
     public void ChoiceOption0() {
         TextBox.text = "Good choice!";
         ChoiceMade = 0;
     }
     public void ChoiceOption1() {
-        //Debug.Log(TextBox.GetComponent<TextMeshPro>());
         TextBox.text = "Bad choice!";
         ChoiceMade = 1;
     }
