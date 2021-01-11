@@ -62,6 +62,10 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
+	public void setAirControl(bool floats) {
+		m_AirControl = floats;
+	}
+
 
 	public void Move(float move, bool crouch, bool jump)
 	{
