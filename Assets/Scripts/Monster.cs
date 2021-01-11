@@ -22,7 +22,7 @@ public class Monster : MonoBehaviour
         if (col.gameObject.name.Equals("player")) {
           main.GetComponent<ChoiceScript>().newQuestion();
         }
-        //TODO: also will want to lock movement and otherwise pause the game
+        //TODO: also will want to stop movement and otherwise pause the game
         //have question show now but not before this
     }
 }

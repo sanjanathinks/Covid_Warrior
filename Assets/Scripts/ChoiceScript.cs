@@ -12,6 +12,7 @@ public class ChoiceScript : MonoBehaviour
     public GameObject Choice03;
     public GameObject Choice04;
     public bool ChoiceMade;
+    public GameObject canvas;
 
     private TextMeshProUGUI aText;
     private TextMeshProUGUI bText;
@@ -25,10 +26,12 @@ public class ChoiceScript : MonoBehaviour
       bText = Choice02.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       cText = Choice03.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       dText = Choice04.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
+      canvas.SetActive(false);
     }
 
     void FixedUpdate() {
       if (this.GetComponent<Question>().getQuestion() != null && !TextBox.text.Equals(this.GetComponent<Question>().getQuestion()) && changed) {
+        canvas.SetActive(true);
         ChoiceMade = false;
         TextBox.text = this.GetComponent<Question>().getQuestion();
         aText.text = this.GetComponent<Question>().getA();
