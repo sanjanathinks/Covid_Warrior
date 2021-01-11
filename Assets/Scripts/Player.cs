@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     public bool newUser = false;
     public bool downloading = false;
 
-    //private Rigidbody2D _rigidBody2D;
     private Vector2 _movement;
     private PlayerData _playerData;
     private List<string> qCorrect;
@@ -29,25 +28,15 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        //_rigidBody2D = GetComponent<Rigidbody2D>();
         _playerData = new PlayerData();
         qCorrect = new List<string>();
         qIncorrect = new List<string>();
     }
 
-    void Update()
-    {
-        // Mouse and keyboard input logic here ...
-    }
-
-    void FixedUpdate() {
-        // Physics related updates here ...
-    }
-
     public void updateUser() {
       _playerData.questions_correct = qCorrect.ToArray();
       _playerData.questions_incorrect = qIncorrect.ToArray();
-      StartCoroutine(Update(_playerData.Stringify(), updated => {
+      StartCoroutine(UpdateInfo(_playerData.Stringify(), updated => {
         Debug.Log(updated);
       }));
     }
@@ -178,7 +167,7 @@ public class Player : MonoBehaviour
         }
     }
 
-    IEnumerator Update(string profile, System.Action<string> callback = null)
+    IEnumerator UpdateInfo(string profile, System.Action<string> callback = null)
     {
         Debug.Log(profile);
         byte[] bodyRaw = Encoding.UTF8.GetBytes(profile);
