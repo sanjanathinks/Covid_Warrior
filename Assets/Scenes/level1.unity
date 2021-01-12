@@ -1017,7 +1017,7 @@ MonoBehaviour:
   Choice03: {fileID: 1474169787}
   Choice04: {fileID: 416404110}
   ChoiceMade: 255
-  canvas: {fileID: 1213769298}
+  questionBoard: {fileID: 843733922}
 --- !u!4 &230796450
 Transform:
   m_ObjectHideFlags: 0
@@ -5888,6 +5888,7 @@ MonoBehaviour:
   speed: 1.5
   newUser: 0
   downloading: 0
+  health: 10
 --- !u!1 &1963359847
 GameObject:
   m_ObjectHideFlags: 0

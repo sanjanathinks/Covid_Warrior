@@ -36,6 +36,15 @@ public class Question : MonoBehaviour
       }
     }
 
+    public void answeredQuestion(int correct) {
+      //>0 indicates answered correct, <0 incorrect
+      string info = "{\"questionID\":\"" + _questionData.id +"\", \"correct\":" + correct + "}";
+      Debug.Log(info);
+      StartCoroutine(Answer(info, result => {
+        Debug.Log(result);
+      }));
+    }
+
     public string getQuestion() {
       return _questionData.question;
     }
@@ -97,4 +106,31 @@ public class Question : MonoBehaviour
       generating = false;
     }
 
+    IEnumerator Answer(string info, System.Action<string> callback = null)
+    {
+        using (UnityWebRequest request = new UnityWebRequest("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/answered", "POST"))
+        {
+            request.SetRequestHeader("Content-Type", "application/json");
+            byte[] bodyRaw = Encoding.UTF8.GetBytes(info);
+            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            request.downloadHandler = new DownloadHandlerBuffer();
+            yield return request.SendWebRequest();
+
+            if (request.isNetworkError || request.isHttpError)
+            {
+                Debug.Log(request.error);
+                if(callback != null)
+                {
+                    callback.Invoke("false");
+                }
+            }
+            else
+            {
+                if(callback != null)
+                {
+                    callback.Invoke(request.downloadHandler.text);
+                }
+            }
+        }
+    }
 }

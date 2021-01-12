@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float speed = 1.5f;
     public bool newUser = false;
     public bool downloading = false;
+    public int health = 10;
 
     private Vector2 _movement;
     private PlayerData _playerData;
