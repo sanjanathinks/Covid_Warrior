@@ -30,32 +30,32 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
-      if (this.GetComponent<Question>().getQuestion() != null && !TextBox.text.Equals(this.GetComponent<Question>().getQuestion()) && changed) {
+      if (GetComponent<Question>().getQuestion() != null && !TextBox.text.Equals(GetComponent<Question>().getQuestion()) && changed) {
         questionBoard.SetActive(true);
         ChoiceMade = false;
-        TextBox.text = this.GetComponent<Question>().getQuestion();
-        aText.text = this.GetComponent<Question>().getA();
-        bText.text = this.GetComponent<Question>().getB();
-        cText.text = this.GetComponent<Question>().getC();
-        dText.text = this.GetComponent<Question>().getD();
+        TextBox.text = GetComponent<Question>().getQuestion();
+        aText.text = GetComponent<Question>().getA();
+        bText.text = GetComponent<Question>().getB();
+        cText.text = GetComponent<Question>().getC();
+        dText.text = GetComponent<Question>().getD();
         changed = false;
       }
     }
 
     public void newQuestion() {
       //TODO: will want this to pull the parameters from the level you're on or the player you are
-      this.GetComponent<Question>().generateQuestion("math", "intermediate");
+      GetComponent<Question>().generateQuestion("math", "intermediate");
       changed = true;
     }
 
     public void ChoiceOption(string choice) {
-      Debug.Log(choice);
-      Debug.Log(this.GetComponent<Question>().correctAnswer());
-      if (choice.Equals(this.GetComponent<Question>().correctAnswer())) {
+      if (choice.Equals(GetComponent<Question>().correctAnswer())) {
+        //TODO: set close button, see full solution if want to
         GetComponent<Question>().answeredQuestion(1);
         TextBox.text = "Good choice!";
       }
       else {
+        //TODO: show solution
         GetComponent<Question>().answeredQuestion(-1);
         TextBox.text = "Bad choice!";
       }

@@ -38,7 +38,6 @@ public class QuestionData
 
       start = json.IndexOf("bridges_unit\":{\"$numberInt\":\"") + "bridges_unit\":{\"$numberInt\":\"".Length;
       end = json.IndexOf("\"},\"bridges_title");
-      Debug.Log(json.Substring(start, end - start));
       q.bridges_unit = int.Parse(json.Substring(start, end - start));
 
       q.nc_standard_all = q.nc_standard.Split('\\');

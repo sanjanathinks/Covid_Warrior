@@ -15,15 +15,6 @@ public class Question : MonoBehaviour
       _questionData = new QuestionData();
     }
 
-    void Update()
-    {
-
-    }
-
-    void FixedUpdate() {
-
-    }
-
     public void generateQuestion(string type, string level) {
       if (!generating) {
         string ans_correct = player.GetComponent<Player>().getCorrect();
@@ -38,8 +29,8 @@ public class Question : MonoBehaviour
 
     public void answeredQuestion(int correct) {
       //>0 indicates answered correct, <0 incorrect
+      player.GetComponent<Player>().answered(_questionData.id, correct);
       string info = "{\"questionID\":\"" + _questionData.id +"\", \"correct\":" + correct + "}";
-      Debug.Log(info);
       StartCoroutine(Answer(info, result => {
         Debug.Log(result);
       }));

@@ -34,6 +34,11 @@ public class Player : MonoBehaviour
         qIncorrect = new List<string>();
     }
 
+    public void answered(string questionID, int correct) {
+      if (correct > 0) qCorrect.Add(questionID);
+      else qIncorrect.Add(questionID);
+    }
+
     public void updateUser() {
       _playerData.questions_correct = qCorrect.ToArray();
       _playerData.questions_incorrect = qIncorrect.ToArray();
