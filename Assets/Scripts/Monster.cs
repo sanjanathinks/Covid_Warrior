@@ -7,7 +7,6 @@ public class Monster : MonoBehaviour
   public GameObject main;
   public GameObject camera;
   public PlayerMovement player;
-  public GameObject bounds;
 
   public int health = 10;
     // Start is called before the first frame update
@@ -21,7 +20,6 @@ public class Monster : MonoBehaviour
     {
       if (health <= 0) {
         camera.SetActive(false);
-        bounds.SetActive(false);
         Destroy(this.gameObject);
       }
     }

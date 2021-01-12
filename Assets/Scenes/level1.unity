@@ -3246,7 +3246,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 965133084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: -13, z: 0}
+  m_LocalPosition: {x: 2, y: -13, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4228,7 +4228,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331959171}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.69, y: -1.3699999, z: -10}
+  m_LocalPosition: {x: -33.689995, y: -1.3690786, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -5303,7 +5303,6 @@ MonoBehaviour:
   main: {fileID: 230796447}
   camera: {fileID: 1020439929}
   player: {fileID: 1945378543}
-  bounds: {fileID: 0}
   health: 10
 --- !u!61 &1810132336
 BoxCollider2D:
@@ -5555,7 +5554,6 @@ MonoBehaviour:
   main: {fileID: 230796447}
   camera: {fileID: 2119495468}
   player: {fileID: 1945378543}
-  bounds: {fileID: 0}
   health: 10
 --- !u!114 &1915095003
 MonoBehaviour:

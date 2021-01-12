@@ -58,20 +58,15 @@ public class PlayerMovement : MonoBehaviour
       battle = value;
       screenBounds = bounds;
       screenPosition = position;
-      Debug.Log(screenBounds);
-      Debug.Log(position);
-      Debug.Log(screenPosition.x - screenBounds.x/2 + width);
-      Debug.Log(screenPosition.x + screenBounds.x/2 - width);
-      Debug.Log(transform.position);
     }
 
     void LateUpdate() {
       if (battle) {
         Vector3 pos = transform.position;
         float x = pos.x;
-        pos.x = Mathf.Clamp(pos.x, screenPosition.x - screenBounds.x/2 + width, screenPosition.x + screenBounds.x/2 - width);
+        pos.x = Mathf.Clamp(pos.x, screenPosition.x*2 - screenBounds.x + width, screenBounds.x - width);
         if (x != pos.x) {
-          controller.Move(pos.x - x, crouch, jump);
+          controller.Move(pos.x - x, false, false);
         }
       }
     }
