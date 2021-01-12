@@ -11,6 +11,16 @@ public class PlayerMovement : MonoBehaviour
     float horizontalMove = 0f;
     bool jump = false;
     bool crouch = false;
+    bool battle = false;
+    Vector3 screenBounds;
+    Vector3 screenPosition;
+    private float width;
+    private float height;
+
+    void Start() {
+      width = transform.GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
+      height = transform.GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
+    }
 
     void Update()
     {
@@ -42,5 +52,27 @@ public class PlayerMovement : MonoBehaviour
       //move character
       controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
       jump = false;
+    }
+
+    public void setBattle(bool value, Vector3 bounds, Vector3 position) {
+      battle = value;
+      screenBounds = bounds;
+      screenPosition = position;
+      Debug.Log(screenBounds);
+      Debug.Log(position);
+      Debug.Log(screenPosition.x - screenBounds.x/2 + width);
+      Debug.Log(screenPosition.x + screenBounds.x/2 - width);
+      Debug.Log(screenPosition.y - screenBounds.y/2 + height);
+      Debug.Log(screenPosition.y + screenBounds.y/2 - height);
+      Debug.Log(transform.position);
+    }
+
+    void LateUpdate() {
+      if (battle) {
+        Vector3 pos = transform.position;
+        pos.x = Mathf.Clamp(pos.x, screenPosition.x - screenBounds.x/2, screenPosition.x + screenBounds.x/2);
+        pos.y = Mathf.Clamp(pos.y, screenPosition.y - screenBounds.y/2, screenPosition.y + screenBounds.y/2);
+        this.gameObject.GetComponent<Rigidbody2D>().MovePosition(pos);
+      }
     }
 }

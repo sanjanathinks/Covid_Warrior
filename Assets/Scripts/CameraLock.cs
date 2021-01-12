@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CameraLock : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    public Camera MainCamera;
+    private PlayerMovement playerMov;
+
+    void Awake() {
+      playerMov = GameObject.Find("player").GetComponent<PlayerMovement>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void limitPlayerMovement() {
+      //clamp player movement
+      playerMov.setBattle(true, MainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, MainCamera.transform.position.z)), MainCamera.transform.position);
     }
 }

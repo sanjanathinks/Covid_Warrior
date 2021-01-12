@@ -5,6 +5,11 @@ using UnityEngine;
 public class Monster : MonoBehaviour
 {
   public GameObject main;
+  public GameObject camera;
+  public PlayerMovement player;
+  public GameObject bounds;
+
+  public int health = 10;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +19,11 @@ public class Monster : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+      if (health <= 0) {
+        camera.SetActive(false);
+        bounds.SetActive(false);
+        Destroy(this.gameObject);
+      }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -24,5 +33,11 @@ public class Monster : MonoBehaviour
         }
         //TODO: also will want to stop movement and otherwise pause the game
         //have question show now but not before this
+    }
+
+    void OnBecameVisible() {
+      //note that this also triggers if you have editor window open and you can see the monster
+      //but it should be fine for actual gameplay
+      camera.SetActive(true);
     }
 }
