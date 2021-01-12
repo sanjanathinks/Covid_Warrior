@@ -108,12 +108,9 @@ public class Question : MonoBehaviour
 
     IEnumerator Answer(string info, System.Action<string> callback = null)
     {
-        using (UnityWebRequest request = new UnityWebRequest("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/answered", "POST"))
+        byte[] bodyRaw = Encoding.UTF8.GetBytes(info);
+        using (UnityWebRequest request = UnityWebRequest.Put("https://webhooks.mongodb-realm.com/api/client/v2.0/app/covidwarrior-xhivn/service/CovidWarriorInfo/incoming_webhook/answered", bodyRaw))
         {
-            request.SetRequestHeader("Content-Type", "application/json");
-            byte[] bodyRaw = Encoding.UTF8.GetBytes(info);
-            request.uploadHandler = new UploadHandlerRaw(bodyRaw);
-            request.downloadHandler = new DownloadHandlerBuffer();
             yield return request.SendWebRequest();
 
             if (request.isNetworkError || request.isHttpError)

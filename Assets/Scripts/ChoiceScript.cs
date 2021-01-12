@@ -56,6 +56,7 @@ public class ChoiceScript : MonoBehaviour
         TextBox.text = "Good choice!";
       }
       else {
+        GetComponent<Question>().answeredQuestion(-1);
         TextBox.text = "Bad choice!";
       }
       ChoiceMade = true;
