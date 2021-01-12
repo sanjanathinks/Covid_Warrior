@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private float height;
 
     void Start() {
-      width = transform.GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
-      height = transform.GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
+      width = GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
+      height = GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
     }
 
     void Update()
@@ -62,17 +62,17 @@ public class PlayerMovement : MonoBehaviour
       Debug.Log(position);
       Debug.Log(screenPosition.x - screenBounds.x/2 + width);
       Debug.Log(screenPosition.x + screenBounds.x/2 - width);
-      Debug.Log(screenPosition.y - screenBounds.y/2 + height);
-      Debug.Log(screenPosition.y + screenBounds.y/2 - height);
       Debug.Log(transform.position);
     }
 
     void LateUpdate() {
       if (battle) {
         Vector3 pos = transform.position;
-        pos.x = Mathf.Clamp(pos.x, screenPosition.x - screenBounds.x/2, screenPosition.x + screenBounds.x/2);
-        pos.y = Mathf.Clamp(pos.y, screenPosition.y - screenBounds.y/2, screenPosition.y + screenBounds.y/2);
-        this.gameObject.GetComponent<Rigidbody2D>().MovePosition(pos);
+        float x = pos.x;
+        pos.x = Mathf.Clamp(pos.x, screenPosition.x - screenBounds.x/2 + width, screenPosition.x + screenBounds.x/2 - width);
+        if (x != pos.x) {
+          controller.Move(pos.x - x, crouch, jump);
+        }
       }
     }
 }
