@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour
 {
-  public GameObject main;
-  public GameObject camera;
+    public GameObject main;
+    public GameObject virtualCam;
 
-  public int health = 10;
+    public int health = 10;
 
     // Update is called once per frame
     void Update()
     {
       if (health <= 0) {
-        camera.SetActive(false);
+        virtualCam.SetActive(false);
         Destroy(this.gameObject);
       }
     }
@@ -29,6 +29,7 @@ public class Monster : MonoBehaviour
     {
         if (col.gameObject.name.Equals("player")) {
           main.GetComponent<ChoiceScript>().newQuestion();
+          GetComponent<MonsterMove>().pause(true);
         }
         //TODO: also will want to stop movement and otherwise pause the game
         //have question show now but not before this
@@ -37,6 +38,6 @@ public class Monster : MonoBehaviour
     void OnBecameVisible() {
       //note that this also triggers if you have editor window open and you can see the monster
       //but it should be fine for actual gameplay
-      camera.SetActive(true);
+      virtualCam.SetActive(true);
     }
 }
