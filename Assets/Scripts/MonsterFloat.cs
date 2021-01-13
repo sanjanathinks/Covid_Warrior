@@ -9,10 +9,12 @@ public class MonsterFloat : MonoBehaviour
 
     public float runSpeed;
     public float bounceForce;
-    public float totalChangeX;
-    public float totalChangeY;
+    public float xRight;
+    public float xLeft;
+    public float yDown;
+    public float yUp;
 
-    private int direction = 1;
+    private int direction = -1;
     private float traveled;
     private float horizontalMove;
     private float originalX;
@@ -20,9 +22,10 @@ public class MonsterFloat : MonoBehaviour
 
     void Start()
     {
-      originalX = this.gameObject.transform.position.x;
-      originalY = this.gameObject.transform.position.y;
+      originalX = transform.position.x;
+      originalY = transform.position.y;
       controller.setAirControl(true);
+      GetComponent<Rigidbody2D>().gravityScale = 1.0f;
     }
 
     void Update()
@@ -35,16 +38,23 @@ public class MonsterFloat : MonoBehaviour
     {
       //move character
       controller.Move(horizontalMove * Time.fixedDeltaTime, false, false);
-      traveled = this.gameObject.transform.position.x - originalX;
+      traveled = transform.position.x - originalX;
 
       //if moved as far as want and going in direction that would increase that movement change, turn around
-      if (Mathf.Abs(traveled) > totalChangeX && traveled*direction > 0) {
+      if ((traveled > xRight || traveled < -xLeft) && traveled*direction > 0) {
         direction*=-1;
       }
 
       //if gravity pulled down as far as want
-      if (originalY - this.gameObject.transform.position.y > totalChangeY) {
+      if (originalY - transform.position.y > yDown) {
         this.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0f, bounceForce));
       }
+    }
+
+    void LateUpdate() {
+      Vector3 pos = transform.position;
+      float y = pos.y;
+      pos.y = Mathf.Clamp(pos.y, originalY - yDown*2, originalY + yUp);
+      transform.position = pos;
     }
 }

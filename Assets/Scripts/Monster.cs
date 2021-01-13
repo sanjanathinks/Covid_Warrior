@@ -6,14 +6,8 @@ public class Monster : MonoBehaviour
 {
   public GameObject main;
   public GameObject camera;
-  public PlayerMovement player;
 
   public int health = 10;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -22,6 +16,13 @@ public class Monster : MonoBehaviour
         camera.SetActive(false);
         Destroy(this.gameObject);
       }
+    }
+
+    void FixedUpdate() {
+      Vector3 euler = transform.eulerAngles;
+      if (euler.z > 180) euler.z = euler.z - 360;
+      euler.z = Mathf.Clamp(euler.z, -10, 10);
+      transform.eulerAngles = euler;
     }
 
     void OnTriggerEnter2D(Collider2D col)

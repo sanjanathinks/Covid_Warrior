@@ -8,16 +8,17 @@ public class MonsterWalk : MonoBehaviour
     //public Animator animator;
 
     public float runSpeed;
-    public float totalChange;
+    public float xRight;
+    public float xLeft;
 
-    private int direction = 1;
+    private int direction = -1;
     private float traveled;
     private float horizontalMove;
     private float originalX;
 
     void Start()
     {
-      originalX = this.gameObject.transform.position.x;
+      originalX = transform.position.x;
     }
 
     void Update()
@@ -30,10 +31,11 @@ public class MonsterWalk : MonoBehaviour
     {
       //move character
       controller.Move(horizontalMove * Time.fixedDeltaTime, false, false);
-      traveled = this.gameObject.transform.position.x - originalX;
+      traveled = transform.position.x - originalX;
+      Debug.Log(traveled);
 
       //if moved as far as want and going in direction that would increase that movement change, turn around
-      if (Mathf.Abs(traveled) > totalChange && traveled*direction > 0) {
+      if ((traveled > xRight || traveled < -xLeft) && traveled*direction > 0) {
         direction*=-1;
       }
     }
