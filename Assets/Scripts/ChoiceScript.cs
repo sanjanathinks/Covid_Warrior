@@ -19,6 +19,7 @@ public class ChoiceScript : MonoBehaviour
     public Button next;
     public RawImage videoRender;
     public Button videoPlay;
+    public List<Button> videoControls;
 
     private TextMeshProUGUI aText;
     private TextMeshProUGUI bText;
@@ -90,7 +91,9 @@ public class ChoiceScript : MonoBehaviour
       if (next.GetComponentInChildren<TextMeshProUGUI>().text.Equals("Next")) {
         solutionVideo.gameObject.SetActive(true);
         videoRender.gameObject.SetActive(true);
-        videoPlay.gameObject.SetActive(true);
+        foreach (Button b in videoControls) {
+          b.gameObject.SetActive(true);
+        }
 
         solutionText.gameObject.SetActive(false);
         solutionImage.gameObject.SetActive(false);
@@ -103,7 +106,9 @@ public class ChoiceScript : MonoBehaviour
         solutionVideo.gameObject.SetActive(false);
         next.gameObject.SetActive(false);
         videoRender.gameObject.SetActive(false);
-        videoPlay.gameObject.SetActive(false);
+        foreach (Button b in videoControls) {
+          b.gameObject.SetActive(false);
+        }
 
         questionBoard.gameObject.SetActive(false);
         //move player and monster away from each other
@@ -120,6 +125,10 @@ public class ChoiceScript : MonoBehaviour
         solutionVideo.Play();
         videoPlay.GetComponentInChildren<TextMeshProUGUI>().text = "Pause";
       }
+    }
+
+    public void videoSkip(float time) {
+      solutionVideo.time+=time;
     }
 
 }
