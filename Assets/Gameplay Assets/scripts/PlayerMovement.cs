@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
       if (!gameIsPaused) {
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         animator.SetFloat("speed", Mathf.Abs(horizontalMove));
 
@@ -46,6 +47,7 @@ public class PlayerMovement : MonoBehaviour
       if (gameIsPaused) {
         animator.SetFloat("speed", 0);
         animator.SetBool("isJump", false);
+        GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
       }
     }
 

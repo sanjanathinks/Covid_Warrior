@@ -38,5 +38,6 @@ public class Monster : MonoBehaviour
       //note that this also triggers if you have editor window open and you can see the monster
       //but it should be fine for actual gameplay
       virtualCam.SetActive(true);
+      GetComponent<MonsterMove>().enabled = true;
     }
 }
