@@ -60,14 +60,18 @@ public class ChoiceScript : MonoBehaviour
 
     public void ChoiceOption(string choice) {
       if (choice.Equals(GetComponent<Question>().correctAnswer())) {
-        //TODO: set close button, see full solution if want to
         GetComponent<Question>().answeredQuestion(1);
         TextBox.text = "That's right! Here's the full solution:";
+        foreach(GameObject monster in GameObject.FindGameObjectsWithTag("monster")) {
+          if (monster.GetComponent<SpriteRenderer>().isVisible) {
+            monster.GetComponent<Monster>().health+=-2;
+          }
+        }
       }
       else {
-        //TODO: show solution
         GetComponent<Question>().answeredQuestion(-1);
         TextBox.text = "That's not the right answer. Take a look at the solution:";
+        GameObject.Find("player").GetComponent<Player>().health+=-2;
       }
 
       Choice01.SetActive(false);
@@ -93,10 +97,13 @@ public class ChoiceScript : MonoBehaviour
         next.GetComponentInChildren<TextMeshProUGUI>().text = "Close";
       }
       else if (next.GetComponentInChildren<TextMeshProUGUI>().text.Equals("Close")) {
+        next.GetComponentInChildren<TextMeshProUGUI>().text = "Next";
+
         solutionVideo.gameObject.SetActive(false);
         next.gameObject.SetActive(false);
         videoRender.gameObject.SetActive(false);
         videoPlay.gameObject.SetActive(false);
+
         questionBoard.gameObject.SetActive(false);
         //move player and monster away from each other
         PlayerMovement.gameIsPaused = false;
