@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,12 +17,19 @@ public class PlayerMovement : MonoBehaviour
     bool battle = false;
     Vector3 screenBounds;
     Vector3 screenPosition;
+
     private float width;
     private float height;
+    private GameObject main;
+    private Button attackButton;
 
     void Start() {
       width = GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
       height = GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
+      main = GameObject.Find("GameObject");
+      attackButton = GameObject.Find("Attack").GetComponent<Button>();
+      attackButton.onClick.AddListener(attack);
+      attackButton.gameObject.SetActive(false);
     }
 
     void Update()
@@ -55,8 +63,6 @@ public class PlayerMovement : MonoBehaviour
       animator.SetBool("isJump", false);
     }
 
-    // Update is called once per frame
-
     void FixedUpdate()
     {
       if (!gameIsPaused) {
@@ -74,6 +80,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void setBattle(bool value) {
       battle = value;
+    }
+
+    void attack() {
+      main.GetComponent<ChoiceScript>().newQuestion();
+      gameIsPaused = true;
+      //TODO: also should play attack animation, this is why need to do in movement
+      attackButton.gameObject.SetActive(false);
     }
 
     void LateUpdate() {

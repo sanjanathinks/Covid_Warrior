@@ -20,6 +20,7 @@ public class ChoiceScript : MonoBehaviour
     public RawImage videoRender;
     public Button videoPlay;
     public List<Button> videoControls;
+    public Button attackButton;
 
     private TextMeshProUGUI aText;
     private TextMeshProUGUI bText;
@@ -111,7 +112,8 @@ public class ChoiceScript : MonoBehaviour
         }
 
         questionBoard.gameObject.SetActive(false);
-        //move player and monster away from each other
+        attackButton.gameObject.SetActive(true);
+        //TODO:move player and monster away from each other
         PlayerMovement.gameIsPaused = false;
       }
     }

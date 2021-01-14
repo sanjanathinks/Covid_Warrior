@@ -795,6 +795,7 @@ MonoBehaviour:
   - {fileID: 570455343}
   - {fileID: 1198375008}
   - {fileID: 2125062112}
+  attackButton: {fileID: 1042320964}
 --- !u!114 &199060492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4296,7 +4297,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1042320963
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7760,6 +7761,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 199060490}
   virtualCam: {fileID: 917938388}
+  attack: {fileID: 1042320964}
   health: 10
 --- !u!70 &1506175916
 CapsuleCollider2D:
@@ -9413,6 +9415,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 199060490}
   virtualCam: {fileID: 1220323272}
+  attack: {fileID: 1042320964}
   health: 10
 --- !u!70 &1911470252
 CapsuleCollider2D:

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Monster : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class Monster : MonoBehaviour
 
     private GameObject player;
 
-    void Start() {
+    void Awake() {
       player = GameObject.Find("player");
       attack.interactable = false;
     }
@@ -36,6 +37,18 @@ public class Monster : MonoBehaviour
       if (euler.z > 180) euler.z = euler.z - 360;
       euler.z = Mathf.Clamp(euler.z, -10, 10);
       transform.eulerAngles = euler;
+
+      if (GetComponent<Renderer>().isVisible) {
+        float dist = Vector3.Distance(player.transform.position, transform.position);
+        if (dist <= 10.0f) {
+          attack.interactable = true;
+          attack.GetComponentInChildren<TextMeshProUGUI>().text = "Attack";
+        }
+        else {
+          attack.interactable = false;
+          attack.GetComponentInChildren<TextMeshProUGUI>().text = "Move closer to attack";
+        }
+      }
     }
 
     void OnTriggerEnter2D(Collider2D col)
