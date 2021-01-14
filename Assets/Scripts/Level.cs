@@ -21,8 +21,4 @@ public class Level
     public int getLevelStats(string variableName) {
       return (int)this.GetType().GetField(variableName).GetValue(this);
     }
-
-    /**public int updateLevelStats(string variableName) {
-      (int)this.GetType().GetField(variableName)+=1;
-    }*/
 }
