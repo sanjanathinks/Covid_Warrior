@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -28,12 +29,16 @@ public class ChoiceScript : MonoBehaviour
     private TextMeshProUGUI dText;
     private bool changed;
     private Sprite imageSprite;
+    private GameObject[] allMonsters;
+    private GameObject player;
 
     void Start() {
       aText = Choice01.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       bText = Choice02.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       cText = Choice03.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
       dText = Choice04.transform.Find("answer").gameObject.GetComponent<TextMeshProUGUI>();
+      allMonsters = GameObject.FindGameObjectsWithTag("monster");
+      player = GameObject.Find("player");
       questionBoard.SetActive(false);
     }
 
@@ -64,7 +69,7 @@ public class ChoiceScript : MonoBehaviour
       if (choice.Equals(GetComponent<Question>().correctAnswer())) {
         GetComponent<Question>().answeredQuestion(1);
         TextBox.text = "That's right! Here's the full solution:";
-        foreach(GameObject monster in GameObject.FindGameObjectsWithTag("monster")) {
+        foreach(GameObject monster in allMonsters) {
           if (monster.GetComponent<SpriteRenderer>().isVisible) {
             monster.GetComponent<Monster>().health+=-2;
           }
@@ -73,7 +78,7 @@ public class ChoiceScript : MonoBehaviour
       else {
         GetComponent<Question>().answeredQuestion(-1);
         TextBox.text = "That's not the right answer. Take a look at the solution:";
-        GameObject.Find("player").GetComponent<Player>().health+=-2;
+        player.GetComponent<Player>().health+=-2;
       }
 
       Choice01.SetActive(false);
@@ -104,8 +109,8 @@ public class ChoiceScript : MonoBehaviour
         next.GetComponentInChildren<TextMeshProUGUI>().text = "Next";
         TextBox.text = GetComponent<Question>().getQuestion();
 
-        solutionVideo.gameObject.SetActive(false);
         next.gameObject.SetActive(false);
+        solutionVideo.gameObject.SetActive(false);
         videoRender.gameObject.SetActive(false);
         foreach (Button b in videoControls) {
           b.gameObject.SetActive(false);
@@ -113,7 +118,22 @@ public class ChoiceScript : MonoBehaviour
 
         questionBoard.gameObject.SetActive(false);
         attackButton.gameObject.SetActive(true);
-        //TODO:move player and monster away from each other
+
+        //move monster and player away from each other
+        foreach(GameObject monster in allMonsters) {
+          if (monster.GetComponent<SpriteRenderer>().isVisible) {
+            float monsterX = monster.transform.position.x;
+            float playerX = player.transform.position.x;
+
+            float xDist = monsterX - playerX;
+            float needMove = (11.0f - Math.Abs(xDist))/2;
+            monsterX+=needMove*Math.Sign(xDist);
+            playerX-=needMove*Math.Sign(xDist);
+
+            monster.transform.position = new Vector3(monsterX, monster.transform.position.y, monster.transform.position.z);
+            player.transform.position = new Vector3(playerX, player.transform.position.y, player.transform.position.z);
+          }
+        }
         PlayerMovement.gameIsPaused = false;
       }
     }
