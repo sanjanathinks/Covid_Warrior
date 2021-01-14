@@ -72,6 +72,10 @@ public class PlayerMovement : MonoBehaviour
       screenPosition = position;
     }
 
+    public void setBattle(bool value) {
+      battle = value;
+    }
+
     void LateUpdate() {
       if (battle) {
         Vector3 pos = transform.position;

@@ -14,6 +14,8 @@ public class Monster : MonoBehaviour
     {
       if (health <= 0) {
         virtualCam.SetActive(false);
+        GameObject.Find("player").GetComponent<Player>().updateUser();
+        GameObject.Find("player").GetComponent<PlayerMovement>().setBattle(false);
         Destroy(this.gameObject);
       }
     }
@@ -31,7 +33,6 @@ public class Monster : MonoBehaviour
           main.GetComponent<ChoiceScript>().newQuestion();
           PlayerMovement.gameIsPaused = true;
         }
-        //TODO: have question show now but not before this
     }
 
     void OnBecameVisible() {
