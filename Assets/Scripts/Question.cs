@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Text;
 using UnityEngine.Networking;
 using System.Collections;
+using System.Reflection;
 
 public class Question : MonoBehaviour
 {
@@ -9,10 +10,14 @@ public class Question : MonoBehaviour
     private GameObject player;
     private bool generating;
 
+    public Level currentLevel;
+    public int level_number;
+
     void Start()
     {
       player = GameObject.Find("player");
       _questionData = new QuestionData();
+      currentLevel = new Level(level_number);
     }
 
     public void generateQuestion(string type, string level) {
@@ -29,6 +34,16 @@ public class Question : MonoBehaviour
 
     public void answeredQuestion(int correct) {
       //>0 indicates answered correct, <0 incorrect
+      string variableName;
+      if (correct > 0) {
+        variableName = _questionData.level + "_correct";
+      }
+      else {
+        variableName = _questionData.level + "_incorrect";
+      }
+      FieldInfo fieldInfo = currentLevel.GetType().GetField(variableName);
+      fieldInfo.SetValue(currentLevel, currentLevel.getLevelStats(variableName)+1);
+
       player.GetComponent<Player>().answered(_questionData.id, correct);
       string info = "{\"questionID\":\"" + _questionData.id +"\", \"correct\":" + correct + "}";
       StartCoroutine(Answer(info, result => {
