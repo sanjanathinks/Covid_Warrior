@@ -53,7 +53,7 @@ public class ChoiceScript : MonoBehaviour
 
     public void newQuestion() {
       //TODO: will want this to pull the parameters from the level you're on or the player you are
-      GetComponent<Question>().generateQuestion("math", "intermediate");
+      GetComponent<Question>().generateQuestion("math", "beginner");
       changed = true;
       imageSprite = Resources.Load<Sprite>("images/testImage");
     }
@@ -98,6 +98,7 @@ public class ChoiceScript : MonoBehaviour
       }
       else if (next.GetComponentInChildren<TextMeshProUGUI>().text.Equals("Close")) {
         next.GetComponentInChildren<TextMeshProUGUI>().text = "Next";
+        TextBox.text = GetComponent<Question>().getQuestion();
 
         solutionVideo.gameObject.SetActive(false);
         next.gameObject.SetActive(false);

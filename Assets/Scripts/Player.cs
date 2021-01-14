@@ -96,8 +96,8 @@ public class Player : MonoBehaviour
     }
 
     public string getCorrect() {
-      if (_playerData.questions_correct != null && _playerData.questions_correct.Length > 0) {
-        return string.Join(",", _playerData.questions_correct);
+      if (qCorrect != null && qCorrect.Count > 0) {
+        return string.Join(",", qCorrect);
       }
       else return null;
     }
