@@ -29,10 +29,9 @@ public class Monster : MonoBehaviour
     {
         if (col.gameObject.name.Equals("player")) {
           main.GetComponent<ChoiceScript>().newQuestion();
-          GetComponent<MonsterMove>().pause(true);
+          PlayerMovement.gameIsPaused = true;
         }
-        //TODO: also will want to stop movement and otherwise pause the game
-        //have question show now but not before this
+        //TODO: have question show now but not before this
     }
 
     void OnBecameVisible() {

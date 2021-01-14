@@ -30,20 +30,20 @@ public class MonsterFloat : MonsterMove
 
     void Update()
     {
-      if (!stop) horizontalMove = direction * runSpeed;
+      if (!PlayerMovement.gameIsPaused) horizontalMove = direction * runSpeed;
       //animator.SetFloat("speed", Mathf.Abs(horizontalMove));
     }
 
     void FixedUpdate()
     {
-      if (stop) {
+      if (PlayerMovement.gameIsPaused) {
         GetComponent<Rigidbody2D>().gravityScale = 0.0f;
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         foreach (Collider c in GetComponents<Collider>()) {
           c.enabled = false;
         }
       }
-      if (!stop) {
+      if (!PlayerMovement.gameIsPaused) {
         GetComponent<Rigidbody2D>().gravityScale = 1.0f;
         foreach (Collider c in GetComponents<Collider>()) {
           c.enabled = true;
@@ -67,7 +67,7 @@ public class MonsterFloat : MonsterMove
     }
 
     void LateUpdate() {
-      if (!stop) {
+      if (!PlayerMovement.gameIsPaused) {
         Vector3 pos = transform.position;
         float y = pos.y;
         pos.y = Mathf.Clamp(pos.y, originalY - yDown*2, originalY + yUp);

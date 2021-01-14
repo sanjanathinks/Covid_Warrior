@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    public static bool gameIsPaused;
+
     public CharacterController2D controller;
     public Animator animator;
 
@@ -24,20 +26,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-      horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-      animator.SetFloat("speed", Mathf.Abs(horizontalMove));
+      if (!gameIsPaused) {
+        horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
+        animator.SetFloat("speed", Mathf.Abs(horizontalMove));
 
 
-      if (Input.GetButtonDown("Jump")){
-         jump = true;
-         animator.SetBool("isJump", true);
+        if (Input.GetButtonDown("Jump")){
+           jump = true;
+           animator.SetBool("isJump", true);
+        }
+
+        if (Input.GetButtonDown("Crouch")){
+           crouch = true;
+        }
+        else if (Input.GetButtonUp("Crouch")) {
+            crouch = false;
+        }
       }
-
-      if (Input.GetButtonDown("Crouch")){
-         crouch = true;
-      }
-      else if (Input.GetButtonUp("Crouch")) {
-          crouch = false;
+      if (gameIsPaused) {
+        animator.SetFloat("speed", 0);
+        animator.SetBool("isJump", false);
       }
     }
 
@@ -49,9 +57,11 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-      //move character
-      controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
-      jump = false;
+      if (!gameIsPaused) {
+        //move character
+        controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+        jump = false;
+      }
     }
 
     public void setBattle(bool value, Vector3 bounds, Vector3 position) {

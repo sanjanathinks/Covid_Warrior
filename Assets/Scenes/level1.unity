@@ -6478,7 +6478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 199060490}
-  camera: {fileID: 917938388}
+  virtualCam: {fileID: 917938388}
   health: 10
 --- !u!70 &1506175916
 CapsuleCollider2D:
@@ -7860,7 +7860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1911470247
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7986,7 +7986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 199060490}
-  camera: {fileID: 1220323272}
+  virtualCam: {fileID: 1220323272}
   health: 10
 --- !u!70 &1911470252
 CapsuleCollider2D:

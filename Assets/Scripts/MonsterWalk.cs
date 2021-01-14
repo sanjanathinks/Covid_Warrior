@@ -23,19 +23,19 @@ public class MonsterWalk : MonsterMove
 
     void Update()
     {
-      if (!stop) horizontalMove = direction * runSpeed;
+      if (!PlayerMovement.gameIsPaused) horizontalMove = direction * runSpeed;
       //animator.SetFloat("speed", Mathf.Abs(horizontalMove));
     }
 
     void FixedUpdate()
     {
-      if (stop) {
+      if (PlayerMovement.gameIsPaused) {
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
         foreach (Collider c in GetComponents<Collider>()) {
           c.enabled = false;
         }
       }
-      if (!stop) {
+      if (!PlayerMovement.gameIsPaused) {
         foreach (Collider c in GetComponents<Collider>()) {
           c.enabled = true;
         }
