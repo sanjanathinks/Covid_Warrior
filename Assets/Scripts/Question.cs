@@ -22,10 +22,11 @@ public class Question : MonoBehaviour
 
     public void generateQuestion(string type, string level) {
       if (!generating) {
-        string ans_correct = player.GetComponent<Player>().getCorrect();
+        string ans = player.GetComponent<Player>().getAnswered();
+        Debug.Log(ans);
         _questionData.type = type;
         _questionData.level = level;
-        StartCoroutine(Download(_questionData.type, _questionData.level, ans_correct, result => {
+        StartCoroutine(Download(_questionData.type, _questionData.level, ans, result => {
           _questionData = result;
           Debug.Log(_questionData.Stringify());
         }));

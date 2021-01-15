@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     private PlayerData _playerData;
     private List<string> qCorrect;
     private List<string> qIncorrect;
+    private List<string> qIncorrectRecent;
 
     void Awake() {
       GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
@@ -32,11 +33,15 @@ public class Player : MonoBehaviour
         _playerData = new PlayerData();
         qCorrect = new List<string>();
         qIncorrect = new List<string>();
+        qIncorrectRecent = new List<string>();
     }
 
     public void answered(string questionID, int correct) {
       if (correct > 0) qCorrect.Add(questionID);
-      else qIncorrect.Add(questionID);
+      else {
+        qIncorrect.Add(questionID);
+        qIncorrectRecent.Add(questionID);
+      }
     }
 
     public void updateUser() {
@@ -95,19 +100,32 @@ public class Player : MonoBehaviour
       }));
     }
 
-    public string getCorrect() {
+    public string getAnswered() {
+      string correct = "";
+      string incorrectRecent = "";
       if (qCorrect != null && qCorrect.Count > 0) {
-        return string.Join(",", qCorrect);
+        correct = string.Join(",", qCorrect);
+      }
+      if (qIncorrectRecent != null && qIncorrectRecent.Count > 0) {
+        incorrectRecent = string.Join(",", qIncorrectRecent);
+      }
+      if (correct.Length > 0 && incorrectRecent.Length > 0) {
+        return correct + "," +incorrectRecent;
+      }
+      else if (correct.Length > 0) {
+        return correct;
+      }
+      else if (incorrectRecent.Length > 0) {
+        return incorrectRecent;
       }
       else return null;
     }
 
-    public void addCorrect(string q) {
-      qCorrect.Add(q);
-    }
-
-    public void addIncorrect(string q) {
-      qIncorrect.Add(q);
+    public string getIncorrectRecent() {
+      if (qIncorrectRecent != null && qIncorrectRecent.Count > 0) {
+        return string.Join(",", qIncorrectRecent);
+      }
+      else return null;
     }
 
     public string getUsername() {
