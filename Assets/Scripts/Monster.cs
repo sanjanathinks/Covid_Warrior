@@ -6,14 +6,14 @@ using TMPro;
 
 public class Monster : MonoBehaviour
 {
-    public static float lastQuestionTime;
+    public static float timeInRange;
 
     public GameObject main;
     public GameObject virtualCam;
     public Button attack;
 
     public int health = 10;
-    public float attackTime; //time between last question finish and monster's potential for next attack
+    public float attackTime; //time player has been in range of monster attack
 
     private GameObject player;
 
@@ -46,11 +46,11 @@ public class Monster : MonoBehaviour
         if (dist <= 10.0f) {
           attack.interactable = true;
           attack.GetComponentInChildren<TextMeshProUGUI>().text = "Attack";
+          timeInRange+=Time.fixedDeltaTime;
 
           //if it's been enough time and it's close, monster should attack
-          if (Time.time - lastQuestionTime > attackTime && !PlayerMovement.gameIsPaused) {
-            Debug.Log(Time.time);
-            Debug.Log(lastQuestionTime);
+          if (timeInRange > attackTime && !PlayerMovement.gameIsPaused) {
+            Debug.Log(timeInRange);
             attack.gameObject.SetActive(false);
             //monster should attack
             //play monster attack animation, when finished, call monsterAttack()
@@ -77,7 +77,6 @@ public class Monster : MonoBehaviour
       //but it should be fine for actual gameplay
       virtualCam.SetActive(true);
       attack.gameObject.SetActive(true);
-      lastQuestionTime = Time.time;
       GetComponent<MonsterMove>().enabled = true;
     }
 }

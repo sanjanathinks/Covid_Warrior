@@ -118,7 +118,7 @@ public class ChoiceScript : MonoBehaviour
 
         questionBoard.gameObject.SetActive(false);
         attackButton.gameObject.SetActive(true);
-        Monster.lastQuestionTime = Time.time;
+        Monster.timeInRange = 0.0f;
 
         //move monster and player away from each other
         foreach(GameObject monster in allMonsters) {
