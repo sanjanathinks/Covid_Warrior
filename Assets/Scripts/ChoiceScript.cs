@@ -22,6 +22,7 @@ public class ChoiceScript : MonoBehaviour
     public Image solutionImage;
     public VideoPlayer solutionVideo;
     public Button next;
+    public Button close;
     public RawImage videoRender;
     public Button videoPlay;
     public List<Button> videoControls;
@@ -120,48 +121,45 @@ public class ChoiceScript : MonoBehaviour
     }
 
     public void nextClicked() {
-      if (next.GetComponentInChildren<TextMeshProUGUI>().text.Equals("Next")) {
-        solutionVideo.gameObject.SetActive(true);
-        videoRender.gameObject.SetActive(true);
-        foreach (Button b in videoControls) {
-          b.gameObject.SetActive(true);
-        }
-
-        solutionScroll.gameObject.SetActive(false);
-        solutionImage.gameObject.SetActive(false);
-        next.GetComponentInChildren<TextMeshProUGUI>().text = "Close";
+      solutionVideo.gameObject.SetActive(true);
+      videoRender.gameObject.SetActive(true);
+      foreach (Button b in videoControls) {
+        b.gameObject.SetActive(true);
       }
-      else if (next.GetComponentInChildren<TextMeshProUGUI>().text.Equals("Close")) {
-        next.GetComponentInChildren<TextMeshProUGUI>().text = "Next";
 
-        next.gameObject.SetActive(false);
-        solutionVideo.gameObject.SetActive(false);
-        videoRender.gameObject.SetActive(false);
-        foreach (Button b in videoControls) {
-          b.gameObject.SetActive(false);
-        }
-
-        questionBoard.gameObject.SetActive(false);
-        attackButton.gameObject.SetActive(true);
-        Monster.timeInRange = 0.0f;
-
-        //move monster and player away from each other
-        foreach(GameObject monster in allMonsters) {
-          if (monster.GetComponent<SpriteRenderer>().isVisible) {
-            float monsterX = monster.transform.position.x;
-            float playerX = player.transform.position.x;
-
-            float xDist = monsterX - playerX;
-            float needMove = (11.0f - Math.Abs(xDist))/2;
-            monsterX+=needMove*Math.Sign(xDist);
-            playerX-=needMove*Math.Sign(xDist);
-
-            monster.transform.position = new Vector3(monsterX, monster.transform.position.y, monster.transform.position.z);
-            player.transform.position = new Vector3(playerX, player.transform.position.y, player.transform.position.z);
-          }
-        }
-        PlayerMovement.gameIsPaused = false;
+      solutionScroll.gameObject.SetActive(false);
+      solutionImage.gameObject.SetActive(false);
+      next.gameObject.SetActive(false);
+      close.gameObject.SetActive(true);
+    }
+    public void closeClicked() {
+      close.gameObject.SetActive(false);
+      solutionVideo.gameObject.SetActive(false);
+      videoRender.gameObject.SetActive(false);
+      foreach (Button b in videoControls) {
+        b.gameObject.SetActive(false);
       }
+
+      questionBoard.gameObject.SetActive(false);
+      attackButton.gameObject.SetActive(true);
+      Monster.timeInRange = 0.0f;
+
+      //move monster and player away from each other
+      foreach(GameObject monster in allMonsters) {
+        if (monster.GetComponent<SpriteRenderer>().isVisible) {
+          float monsterX = monster.transform.position.x;
+          float playerX = player.transform.position.x;
+
+          float xDist = monsterX - playerX;
+          float needMove = (11.0f - Math.Abs(xDist))/2;
+          monsterX+=needMove*Math.Sign(xDist);
+          playerX-=needMove*Math.Sign(xDist);
+
+          monster.transform.position = new Vector3(monsterX, monster.transform.position.y, monster.transform.position.z);
+          player.transform.position = new Vector3(playerX, player.transform.position.y, player.transform.position.z);
+        }
+      }
+      PlayerMovement.gameIsPaused = false;
     }
 
     public void videoControl() {
@@ -177,6 +175,7 @@ public class ChoiceScript : MonoBehaviour
 
     public void videoSkip(float time) {
       solutionVideo.time+=time;
+      Debug.Log("video skip " + solutionVideo.time);
     }
 
 }
