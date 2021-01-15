@@ -126,6 +126,7 @@ public class ChoiceScript : MonoBehaviour
       foreach (Button b in videoControls) {
         b.gameObject.SetActive(true);
       }
+      videoPlay.GetComponentInChildren<TextMeshProUGUI>().text = "Pause";
 
       solutionScroll.gameObject.SetActive(false);
       solutionImage.gameObject.SetActive(false);

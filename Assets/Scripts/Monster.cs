@@ -50,7 +50,6 @@ public class Monster : MonoBehaviour
 
           //if it's been enough time and it's close, monster should attack
           if (timeInRange > attackTime && !PlayerMovement.gameIsPaused) {
-            Debug.Log(timeInRange);
             attack.gameObject.SetActive(false);
             //monster should attack
             //play monster attack animation, when finished, call monsterAttack()
