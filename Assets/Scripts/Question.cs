@@ -6,7 +6,7 @@ using System.Reflection;
 
 public class Question : MonoBehaviour
 {
-    private QuestionData _questionData;
+    public QuestionData _questionData;
     private GameObject player;
     private bool generating;
 
@@ -28,6 +28,7 @@ public class Question : MonoBehaviour
         _questionData.level = level;
         StartCoroutine(Download(_questionData.type, _questionData.level, ans, result => {
           _questionData = result;
+          GetComponent<ChoiceScript>().changed = true;
           Debug.Log(_questionData.Stringify());
         }));
       }
@@ -50,30 +51,6 @@ public class Question : MonoBehaviour
       StartCoroutine(Answer(info, result => {
         Debug.Log(result);
       }));
-    }
-
-    public string getQuestion() {
-      return _questionData.question;
-    }
-
-    public string getA() {
-      return _questionData.a;
-    }
-
-    public string getB() {
-      return _questionData.b;
-    }
-
-    public string getC() {
-      return _questionData.c;
-    }
-
-    public string getD() {
-      return _questionData.d;
-    }
-
-    public string correctAnswer() {
-      return _questionData.correct;
     }
 
     IEnumerator Download(string type, string level, string correct, System.Action<QuestionData> callback = null)

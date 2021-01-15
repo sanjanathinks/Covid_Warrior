@@ -8,13 +8,17 @@ using UnityEngine.Video;
 
 public class ChoiceScript : MonoBehaviour
 {
-    public TextMeshProUGUI TextBox;
+    public TextMeshProUGUI questionText;
+    public RectTransform questionScroll;
+    public RectTransform questionScrollbar;
+    public Image questionImage;
     public GameObject Choice01;
     public GameObject Choice02;
     public GameObject Choice03;
     public GameObject Choice04;
     public GameObject questionBoard;
     public TextMeshProUGUI solutionText;
+    public RectTransform solutionScroll;
     public Image solutionImage;
     public VideoPlayer solutionVideo;
     public Button next;
@@ -27,8 +31,9 @@ public class ChoiceScript : MonoBehaviour
     private TextMeshProUGUI bText;
     private TextMeshProUGUI cText;
     private TextMeshProUGUI dText;
-    private bool changed;
-    private Sprite imageSprite;
+    public bool changed;
+    private Sprite solutionSprite;
+    private Sprite questionSprite;
     private GameObject[] allMonsters;
     private GameObject player;
 
@@ -43,17 +48,33 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
-      if (GetComponent<Question>().getQuestion() != null && !TextBox.text.Equals(GetComponent<Question>().getQuestion()) && changed) {
+      if (GetComponent<Question>()._questionData.question != null && !questionText.text.Equals(GetComponent<Question>()._questionData.question) && changed) {
         questionBoard.SetActive(true);
         Choice01.SetActive(true);
         Choice02.SetActive(true);
         Choice03.SetActive(true);
         Choice04.SetActive(true);
-        TextBox.text = GetComponent<Question>().getQuestion();
-        aText.text = GetComponent<Question>().getA();
-        bText.text = GetComponent<Question>().getB();
-        cText.text = GetComponent<Question>().getC();
-        dText.text = GetComponent<Question>().getD();
+
+        questionText.text = GetComponent<Question>()._questionData.question;
+        //TODO: will need to change pathing on these images
+        questionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_q);
+        if (questionSprite != null) {
+          questionImage.gameObject.SetActive(true);
+          questionImage.sprite = questionSprite;
+        }
+        else {
+          questionScroll.sizeDelta = new Vector2(1000, 260);
+          questionScrollbar.sizeDelta = new Vector2(20, 260);
+        }
+        Debug.Log(questionSprite);
+        //if no image, want text to be bigger while question is up then need change after answer
+        aText.text = GetComponent<Question>()._questionData.a;
+        bText.text = GetComponent<Question>()._questionData.b;
+        cText.text = GetComponent<Question>()._questionData.c;
+        dText.text = GetComponent<Question>()._questionData.d;
+        solutionText.text = GetComponent<Question>()._questionData.solution;
+        solutionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_s);
+
         changed = false;
         PlayerMovement.gameIsPaused = true;
       }
@@ -62,14 +83,15 @@ public class ChoiceScript : MonoBehaviour
     public void newQuestion() {
       //TODO: will want this to pull the parameters from the level you're on or the player you are
       GetComponent<Question>().generateQuestion("math", "beginner");
-      changed = true;
-      imageSprite = Resources.Load<Sprite>("images/testImage");
     }
 
     public void ChoiceOption(string choice) {
-      if (choice.Equals(GetComponent<Question>().correctAnswer())) {
+      questionScroll.sizeDelta = new Vector2(1000, 120);
+      questionScrollbar.sizeDelta = new Vector2(20, 120);
+
+      if (choice.Equals(GetComponent<Question>()._questionData.correct)) {
         GetComponent<Question>().answeredQuestion(1);
-        TextBox.text = "That's right! Here's the full solution:";
+        questionText.text = "That's right! Here's the full solution:";
         foreach(GameObject monster in allMonsters) {
           if (monster.GetComponent<SpriteRenderer>().isVisible) {
             monster.GetComponent<Monster>().health+=-2;
@@ -78,7 +100,7 @@ public class ChoiceScript : MonoBehaviour
       }
       else {
         GetComponent<Question>().answeredQuestion(-1);
-        TextBox.text = "That's not the right answer. Take a look at the solution:";
+        questionText.text = "That's not the right answer. Take a look at the solution:";
         player.GetComponent<Player>().health+=-2;
       }
 
@@ -86,10 +108,13 @@ public class ChoiceScript : MonoBehaviour
       Choice02.SetActive(false);
       Choice03.SetActive(false);
       Choice04.SetActive(false);
+      questionImage.gameObject.SetActive(false);
 
-      solutionText.gameObject.SetActive(true);
-      solutionImage.gameObject.SetActive(true);
-      solutionImage.sprite = imageSprite;
+      solutionScroll.gameObject.SetActive(true);
+      if (solutionSprite!=null) {
+        solutionImage.sprite = solutionSprite;
+        solutionImage.gameObject.SetActive(true);
+      }
       solutionVideo.url = "https://github.com/sanjanathinks/Covid-Warrior/blob/selena/Assets/stockVideo.mp4?raw=true";
       next.gameObject.SetActive(true);
     }
@@ -102,7 +127,7 @@ public class ChoiceScript : MonoBehaviour
           b.gameObject.SetActive(true);
         }
 
-        solutionText.gameObject.SetActive(false);
+        solutionScroll.gameObject.SetActive(false);
         solutionImage.gameObject.SetActive(false);
         next.GetComponentInChildren<TextMeshProUGUI>().text = "Close";
       }
