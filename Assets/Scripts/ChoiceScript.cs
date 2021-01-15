@@ -108,7 +108,6 @@ public class ChoiceScript : MonoBehaviour
       }
       else if (next.GetComponentInChildren<TextMeshProUGUI>().text.Equals("Close")) {
         next.GetComponentInChildren<TextMeshProUGUI>().text = "Next";
-        TextBox.text = GetComponent<Question>().getQuestion();
 
         next.gameObject.SetActive(false);
         solutionVideo.gameObject.SetActive(false);

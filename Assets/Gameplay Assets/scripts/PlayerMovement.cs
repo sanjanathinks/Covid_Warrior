@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,13 +24,23 @@ public class PlayerMovement : MonoBehaviour
     private GameObject main;
     private Button attackButton;
 
-    void Start() {
-      width = GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
-      height = GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
+    //need this and OnSceneLoaded because object doesn't destroy
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
       main = GameObject.Find("GameObject");
       attackButton = GameObject.Find("Attack").GetComponent<Button>();
       attackButton.onClick.AddListener(attack);
       attackButton.gameObject.SetActive(false);
+    }
+
+    void Start() {
+      width = GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
+      height = GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
     }
 
     void Update()
@@ -38,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
         horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
         animator.SetFloat("speed", Mathf.Abs(horizontalMove));
-
 
         if (Input.GetButtonDown("Jump")){
            jump = true;
