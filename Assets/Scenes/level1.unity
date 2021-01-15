@@ -711,13 +711,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed5e0f2e304f4564aafeb565eaffc12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextBox: {fileID: 4050115}
+  questionText: {fileID: 0}
+  questionScroll: {fileID: 0}
+  questionScrollbar: {fileID: 0}
+  questionImage: {fileID: 0}
   Choice01: {fileID: 1244153637}
   Choice02: {fileID: 1283247378}
   Choice03: {fileID: 1736042090}
   Choice04: {fileID: 179700308}
-  ChoiceMade: 255
   questionBoard: {fileID: 1530427950}
+  solutionText: {fileID: 0}
+  solutionScroll: {fileID: 0}
+  solutionImage: {fileID: 0}
+  solutionVideo: {fileID: 0}
+  next: {fileID: 0}
+  close: {fileID: 0}
+  videoRender: {fileID: 0}
+  videoPlay: {fileID: 0}
+  videoControls: []
+  attackButton: {fileID: 0}
+  changed: 0
 --- !u!114 &199060492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,6 +743,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4940307c7e6ae4b73b005e3fb004379f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _questionData:
+    id: 
+    question: 
+    type: 
+    img_q: 
+    level: 
+    a: 
+    b: 
+    c: 
+    d: 
+    correct: 
+    solution: 
+    img_s: 
+    explain_record: 
+    bridges_unit: 0
+    bridges_title: 
+    topic: 
+    nc_standard: 
+    nc_description: 
+    nc_standard_all: []
+    nc_description_all: []
+  level_number: 0
 --- !u!4 &199060493
 Transform:
   m_ObjectHideFlags: 0
@@ -1860,8 +1895,10 @@ MonoBehaviour:
   controller: {fileID: 503483994}
   runSpeed: 20
   bounceForce: 200
-  totalChangeX: 5
-  totalChangeY: 2
+  xRight: 0
+  xLeft: 0
+  yDown: 0
+  yUp: 0
 --- !u!61 &503483993
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1950,9 +1987,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 199060490}
-  camera: {fileID: 917938388}
-  player: {fileID: 0}
+  virtualCam: {fileID: 917938388}
+  attack: {fileID: 0}
   health: 10
+  attackTime: 0
 --- !u!61 &503483997
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6298,7 +6336,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1426699801}
   runSpeed: 20
-  totalChange: 10
+  xRight: 0
+  xLeft: 0
 --- !u!114 &1426699801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6361,9 +6400,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 199060490}
-  camera: {fileID: 1220323272}
-  player: {fileID: 0}
+  virtualCam: {fileID: 1220323272}
+  attack: {fileID: 0}
   health: 10
+  attackTime: 0
 --- !u!61 &1426699804
 BoxCollider2D:
   m_ObjectHideFlags: 0
