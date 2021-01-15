@@ -55,6 +55,7 @@ public class ChoiceScript : MonoBehaviour
         cText.text = GetComponent<Question>().getC();
         dText.text = GetComponent<Question>().getD();
         changed = false;
+        PlayerMovement.gameIsPaused = true;
       }
     }
 
@@ -118,6 +119,7 @@ public class ChoiceScript : MonoBehaviour
 
         questionBoard.gameObject.SetActive(false);
         attackButton.gameObject.SetActive(true);
+        Monster.lastQuestionTime = Time.time;
 
         //move monster and player away from each other
         foreach(GameObject monster in allMonsters) {

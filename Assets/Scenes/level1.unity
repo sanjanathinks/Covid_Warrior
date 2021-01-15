@@ -7627,7 +7627,6 @@ GameObject:
   - component: {fileID: 1506175912}
   - component: {fileID: 1506175911}
   - component: {fileID: 1506175917}
-  - component: {fileID: 1506175916}
   - component: {fileID: 1506175915}
   - component: {fileID: 1506175914}
   - component: {fileID: 1506175913}
@@ -7764,22 +7763,7 @@ MonoBehaviour:
   virtualCam: {fileID: 917938388}
   attack: {fileID: 1042320964}
   health: 10
---- !u!70 &1506175916
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1506175910}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: -0.4, y: -0.2}
-  m_Size: {x: 4.2, y: 8}
-  m_Direction: 0
+  attackTime: 5
 --- !u!50 &1506175917
 Rigidbody2D:
   serializedVersion: 4
@@ -9281,7 +9265,6 @@ GameObject:
   - component: {fileID: 1911470251}
   - component: {fileID: 1911470250}
   - component: {fileID: 1911470249}
-  - component: {fileID: 1911470254}
   - component: {fileID: 1911470252}
   m_Layer: 0
   m_Name: monster1
@@ -9418,6 +9401,7 @@ MonoBehaviour:
   virtualCam: {fileID: 1220323272}
   attack: {fileID: 1042320964}
   health: 10
+  attackTime: 5
 --- !u!70 &1911470252
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -9455,22 +9439,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 0
---- !u!70 &1911470254
-CapsuleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1911470246}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.7}
-  m_Size: {x: 9.5, y: 7}
-  m_Direction: 1
 --- !u!1 &1945378535
 GameObject:
   m_ObjectHideFlags: 0
