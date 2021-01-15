@@ -5,7 +5,6 @@ TagManager:
   serializedVersion: 2
   tags:
   - monster
-  - SceneMgmt
   layers:
   - Default
   - TransparentFX
@@ -17,10 +16,10 @@ TagManager:
   - 
   - player
   - Obstacle
-  - monsters
   - Camera Bounds
-  - background
-  - Camera
+  - 
+  - 
+  - 
   - 
   - 
   - 
