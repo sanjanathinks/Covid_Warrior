@@ -21,6 +21,20 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
+	[SerializeField] private float slopeCheckDistance;
+	[SerializeField] PhysicsMaterial2D slippery;
+	[SerializeField] PhysicsMaterial2D friction;
+	[SerializeField] private float maxAngle;
+
+	private CapsuleCollider2D[] allColliders;
+	private Vector2 colliderSize;
+	private float slopeDownAngle;
+	private Vector2 slopeNormalPerpendicular;
+	private bool isOnSlope;
+	private float slopeSideAngle;
+	private float xInput;
+	private bool canWalk;
+
 	[Header("Events")]
 	[Space]
 
@@ -35,6 +49,8 @@ public class CharacterController2D : MonoBehaviour
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
+		allColliders = GetComponents<CapsuleCollider2D>();
+		colliderSize = allColliders[0].size;
 
 		if (OnLandEvent == null)
 			OnLandEvent = new UnityEvent();
@@ -43,8 +59,13 @@ public class CharacterController2D : MonoBehaviour
 			OnCrouchEvent = new BoolEvent();
 	}
 
+	private void Update() {
+		if (this.gameObject.name.Equals("player")) xInput = Input.GetAxisRaw("Horizontal");
+	}
+
 	private void FixedUpdate()
 	{
+		SlopeCheck();
 		bool wasGrounded = m_Grounded;
 		m_Grounded = false;
 
@@ -58,6 +79,59 @@ public class CharacterController2D : MonoBehaviour
 				m_Grounded = true;
 				if (!wasGrounded)
 					OnLandEvent.Invoke();
+			}
+		}
+	}
+
+	private void SlopeCheck() {
+		Vector2 checkPos = transform.position - (Vector3)(new Vector2(0.0f, colliderSize.y / 2));
+		SlopeCheckHorizontal(checkPos);
+		SlopeCheckVertical(checkPos);
+	}
+
+	private void SlopeCheckHorizontal(Vector2 checkPos) {
+		RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, m_WhatIsGround);
+		RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, - transform.right, slopeCheckDistance, m_WhatIsGround);
+
+		if (slopeHitFront) {
+			isOnSlope = true;
+			slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+		} else if (slopeHitBack) {
+			isOnSlope = true;
+			slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+		} else {
+			Debug.Log("reached here");
+			isOnSlope = false;
+			slopeSideAngle = 0.0f;
+		}
+	}
+
+	private void SlopeCheckVertical(Vector2 checkPos) {
+		RaycastHit2D hit = Physics2D.Raycast(checkPos, Vector2.down, slopeCheckDistance, m_WhatIsGround);
+
+		if (hit) {
+			slopeNormalPerpendicular = Vector2.Perpendicular(hit.normal).normalized; //points to left of ground
+			slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up); //angle between y-axis and normal (same as angle between x-axis and slope)
+
+			if (slopeDownAngle != 0) {
+				isOnSlope = true;
+			}
+
+			Debug.DrawRay(hit.point, hit.normal, Color.white);
+			Debug.DrawRay(hit.point, slopeNormalPerpendicular, Color.red);
+
+			if (slopeDownAngle > maxAngle || slopeSideAngle > maxAngle) {
+				canWalk = false;
+			} else {
+				canWalk = true;
+			}
+		}
+
+		if (this.gameObject.name.Equals("player")) {
+			if (isOnSlope && xInput == 0.0f && canWalk) {
+				m_Rigidbody2D.sharedMaterial = friction;
+			} else {
+				m_Rigidbody2D.sharedMaterial = slippery;
 			}
 		}
 	}
@@ -111,8 +185,15 @@ public class CharacterController2D : MonoBehaviour
 				}
 			}
 
-			// Move the character by finding the target velocity
-			Vector3 targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+			// Move the character by finding the target velocity, 3 different cases:
+			Vector3 targetVelocity = Vector3.zero;
+			if (m_Grounded && !isOnSlope) {
+				targetVelocity = new Vector2(move * 10f, 0.0f);
+			} else if (m_Grounded && isOnSlope && canWalk) {
+				targetVelocity = new Vector2(move * slopeNormalPerpendicular.x * -10f, move * slopeNormalPerpendicular.y * -10f);
+			} else if (!m_Grounded) {
+				targetVelocity = new Vector2(move * 10f, m_Rigidbody2D.velocity.y);
+			}
 			// And then smoothing it out and applying it to the character
 			m_Rigidbody2D.velocity = Vector3.SmoothDamp(m_Rigidbody2D.velocity, targetVelocity, ref m_Velocity, m_MovementSmoothing);
 
@@ -130,7 +211,7 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 		// If the player should jump...
-		if (m_Grounded && jump)
+		if (m_Grounded && jump && slopeDownAngle <= maxAngle)
 		{
 			// Add a vertical force to the player.
 			m_Grounded = false;

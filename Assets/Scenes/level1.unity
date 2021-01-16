@@ -1171,8 +1171,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092062949}
   m_HandleRect: {fileID: 2092062948}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.515532
+  m_Value: 1.0000002
+  m_Size: 0.51553196
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8205,6 +8205,10 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 133768349}
   m_CeilingCheck: {fileID: 273359576}
   m_CrouchDisableCollider: {fileID: 0}
+  slopeCheckDistance: 0
+  slippery: {fileID: 0}
+  friction: {fileID: 0}
+  maxAngle: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -10250,6 +10254,10 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 668915974}
   m_CeilingCheck: {fileID: 1895925913}
   m_CrouchDisableCollider: {fileID: 0}
+  slopeCheckDistance: 0
+  slippery: {fileID: 0}
+  friction: {fileID: 0}
+  maxAngle: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls: []
@@ -10512,6 +10520,10 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 789188371}
   m_CeilingCheck: {fileID: 1421584744}
   m_CrouchDisableCollider: {fileID: 1945378540}
+  slopeCheckDistance: 10
+  slippery: {fileID: 6200000, guid: 54a837cf8bb134544b7b5d36eeaaf014, type: 2}
+  friction: {fileID: 6200000, guid: 7c27f70e4b28d4e6f91b49fa3d564830, type: 2}
+  maxAngle: 30
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -10618,7 +10630,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1945378535}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 54a837cf8bb134544b7b5d36eeaaf014, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -10686,7 +10698,7 @@ CapsuleCollider2D:
   m_GameObject: {fileID: 1945378535}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 6200000, guid: 54a837cf8bb134544b7b5d36eeaaf014, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0

@@ -66,6 +66,7 @@ public class Monster : MonoBehaviour
     public void monsterAttack()
     {
         main.GetComponent<ChoiceScript>().newQuestion();
+        main.GetComponent<ChoiceScript>().showQuestion();
     }
 
     //check distance to player
