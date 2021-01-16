@@ -96,10 +96,14 @@ public class PlayerMovement : MonoBehaviour
 
     void attack() {
       main.GetComponent<ChoiceScript>().newQuestion();
-      //TODO: also should play attack animation before pausing, this is why need to do in movement
-      //from what I've seen need to move gameIsPaused into another function and call that from the animation
+      animator.SetBool("isAttacking", true);
+    }
+
+    public void attackFinished() {
       gameIsPaused = true;
       attackButton.gameObject.SetActive(false);
+      animator.SetBool("isAttacking", false);
+      main.GetComponent<ChoiceScript>().showQuestion();
     }
 
     void LateUpdate() {

@@ -49,6 +49,10 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
+
+    }
+
+    public void showQuestion() {
       if (GetComponent<Question>()._questionData.question != null && !questionText.text.Equals(GetComponent<Question>()._questionData.question) && changed) {
         questionBoard.SetActive(true);
         Choice01.SetActive(true);
