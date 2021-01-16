@@ -96,11 +96,12 @@ public class CharacterController2D : MonoBehaviour
 		if (slopeHitFront) {
 			isOnSlope = true;
 			slopeSideAngle = Vector2.Angle(slopeHitFront.normal, Vector2.up);
+			Debug.DrawRay(slopeHitFront.point, slopeHitFront.normal, Color.green);
 		} else if (slopeHitBack) {
 			isOnSlope = true;
-			slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
+			slopeSideAngle = 0.0f;
+			Debug.DrawRay(slopeHitBack.point, slopeHitBack.normal, Color.blue);
 		} else {
-			Debug.Log("reached here");
 			isOnSlope = false;
 			slopeSideAngle = 0.0f;
 		}
@@ -113,7 +114,7 @@ public class CharacterController2D : MonoBehaviour
 			slopeNormalPerpendicular = Vector2.Perpendicular(hit.normal).normalized; //points to left of ground
 			slopeDownAngle = Vector2.Angle(hit.normal, Vector2.up); //angle between y-axis and normal (same as angle between x-axis and slope)
 
-			if (slopeDownAngle != 0) {
+			if (slopeDownAngle != 0.0f) {
 				isOnSlope = true;
 			}
 
@@ -122,6 +123,7 @@ public class CharacterController2D : MonoBehaviour
 
 			if (slopeDownAngle > maxAngle || slopeSideAngle > maxAngle) {
 				canWalk = false;
+				Debug.Log("down: " + slopeDownAngle + ", side: " + slopeSideAngle);
 			} else {
 				canWalk = true;
 			}
@@ -226,8 +228,9 @@ public class CharacterController2D : MonoBehaviour
 		m_FacingRight = !m_FacingRight;
 
 		// Multiply the player's x local scale by -1.
-		Vector3 theScale = transform.localScale;
-		theScale.x *= -1;
-		transform.localScale = theScale;
+		//Vector3 theScale = transform.localScale;
+		//theScale.x *= -1;
+		//transform.localScale = theScale;
+		transform.Rotate(0.0f, 180.0f, 0.0f);
 	}
 }
