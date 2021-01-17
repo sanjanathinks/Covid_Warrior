@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController2D controller;
     public Animator animator;
+    public bool isAttacking;
 
     public float runSpeed = 40f;
     float horizontalMove = 0f;
@@ -102,15 +103,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void attack() {
-      main.GetComponent<ChoiceScript>().newQuestion();
-      animator.SetBool("isAttacking", true);
-      attackButton.gameObject.SetActive(false);
+      foreach (GameObject monster in GameObject.FindGameObjectsWithTag("monster")) {
+        if (monster.GetComponent<Renderer>().isVisible && !monster.GetComponent<Monster>().isAttacking) {
+          isAttacking = true;
+          main.GetComponent<ChoiceScript>().newQuestion();
+          animator.SetBool("isAttacking", true);
+          attackButton.gameObject.SetActive(false);
+        }
+      }
     }
 
     public void attackFinished() {
       gameIsPaused = true;
       animator.SetBool("isAttacking", false);
       ChoiceScript.animationIsFinished();
+      isAttacking = false;
     }
 
     void LateUpdate() {

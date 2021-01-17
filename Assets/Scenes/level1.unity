@@ -2309,7 +2309,7 @@ SpriteRenderer:
   m_Size: {x: 77.7407, y: 54.13}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &458022902
@@ -9127,7 +9127,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1506175910}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8ac985ca6f93d444f8646052de976caa, type: 3}
   m_Name: 
@@ -9184,6 +9184,7 @@ MonoBehaviour:
   virtualCam: {fileID: 917938388}
   attack: {fileID: 1042320964}
   healthBar: {fileID: 1049641040}
+  isAttacking: 0
   health: 10
   maxHealth: 10
   attackTime: 5
@@ -11252,6 +11253,7 @@ MonoBehaviour:
   virtualCam: {fileID: 1220323272}
   attack: {fileID: 1042320964}
   healthBar: {fileID: 1049641040}
+  isAttacking: 0
   health: 10
   maxHealth: 10
   attackTime: 5
@@ -11662,6 +11664,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1945378536}
   animator: {fileID: 1945378537}
+  isAttacking: 0
   runSpeed: 40
 --- !u!70 &1945378544
 CapsuleCollider2D:

@@ -12,6 +12,7 @@ public class Monster : MonoBehaviour
     public GameObject virtualCam;
     public Button attack;
     public GameObject healthBar;
+    public bool isAttacking;
 
     public int health = 10;
     public int maxHealth = 10;
@@ -53,7 +54,8 @@ public class Monster : MonoBehaviour
           timeInRange+=Time.fixedDeltaTime;
 
           //if it's been enough time and it's close, monster should attack
-          if (timeInRange > attackTime && !PlayerMovement.gameIsPaused) {
+          if (timeInRange > attackTime && !PlayerMovement.gameIsPaused && !player.GetComponent<PlayerMovement>().isAttacking) {
+            isAttacking = true;
             attack.gameObject.SetActive(false);
             //TODO: play monster attack animation, when finished, call attackFinished()
             main.GetComponent<ChoiceScript>().newQuestion();
@@ -70,6 +72,7 @@ public class Monster : MonoBehaviour
     public void attackFinished() {
       PlayerMovement.gameIsPaused = true;
       ChoiceScript.animationIsFinished();
+      isAttacking = false;
     }
 
     //check distance to player
