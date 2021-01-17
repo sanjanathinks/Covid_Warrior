@@ -11,8 +11,10 @@ public class Monster : MonoBehaviour
     public GameObject main;
     public GameObject virtualCam;
     public Button attack;
+    public GameObject healthBar;
 
     public int health = 10;
+    public int maxHealth = 10;
     public float attackTime; //time player has been in range of monster attack
 
     private GameObject player;
@@ -20,6 +22,7 @@ public class Monster : MonoBehaviour
     void Awake() {
       player = GameObject.Find("player");
       attack.interactable = false;
+      healthBar.SetActive(false);
     }
 
     // Update is called once per frame
@@ -77,5 +80,6 @@ public class Monster : MonoBehaviour
       virtualCam.SetActive(true);
       attack.gameObject.SetActive(true);
       GetComponent<MonsterMove>().enabled = true;
+      healthBar.SetActive(true);
     }
 }

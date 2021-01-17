@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     public bool newUser = false;
     public bool downloading = false;
     public int health = 10;
+    public int maxHealth = 10;
 
     private Vector2 _movement;
     private PlayerData _playerData;

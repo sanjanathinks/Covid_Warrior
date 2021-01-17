@@ -29,6 +29,8 @@ public class ChoiceScript : MonoBehaviour
     public Button videoPlay;
     public List<Button> videoControls;
     public Button attackButton;
+    public Slider playerHealth;
+    public Slider monsterHealth;
 
     private TextMeshProUGUI aText;
     private TextMeshProUGUI bText;
@@ -107,6 +109,7 @@ public class ChoiceScript : MonoBehaviour
         foreach(GameObject monster in allMonsters) {
           if (monster.GetComponent<SpriteRenderer>().isVisible) {
             monster.GetComponent<Monster>().health+=-2;
+            monsterHealth.GetComponent<HealthBar>().SetHealth(-2);
           }
         }
       }
@@ -114,6 +117,7 @@ public class ChoiceScript : MonoBehaviour
         GetComponent<Question>().answeredQuestion(-1);
         questionText.text = "That's not the right answer. Take a look at the solution:";
         player.GetComponent<Player>().health+=-2;
+        playerHealth.GetComponent<HealthBar>().SetHealth(-2);
       }
 
       Choice01.SetActive(false);
