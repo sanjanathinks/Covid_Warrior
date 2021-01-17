@@ -8,6 +8,8 @@ using UnityEngine.Video;
 
 public class ChoiceScript : MonoBehaviour
 {
+    public static bool animationFinished;
+
     public TextMeshProUGUI questionText;
     public RectTransform questionScroll;
     public RectTransform questionScrollbar;
@@ -27,6 +29,8 @@ public class ChoiceScript : MonoBehaviour
     public Button videoPlay;
     public List<Button> videoControls;
     public Button attackButton;
+    public Slider playerHealth;
+    public Slider monsterHealth;
 
     private TextMeshProUGUI aText;
     private TextMeshProUGUI bText;
@@ -49,36 +53,45 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
-      if (GetComponent<Question>()._questionData.question != null && !questionText.text.Equals(GetComponent<Question>()._questionData.question) && changed) {
-        questionBoard.SetActive(true);
-        Choice01.SetActive(true);
-        Choice02.SetActive(true);
-        Choice03.SetActive(true);
-        Choice04.SetActive(true);
-
-        questionText.text = GetComponent<Question>()._questionData.question;
-        //TODO: will need to change pathing on these images
-        questionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_q);
-        if (questionSprite != null) {
-          questionImage.gameObject.SetActive(true);
-          questionImage.sprite = questionSprite;
-        }
-        else {
-          questionScroll.sizeDelta = new Vector2(1000, 260);
-          questionScrollbar.sizeDelta = new Vector2(20, 260);
-        }
-        Debug.Log(questionSprite);
-        //if no image, want text to be bigger while question is up then need change after answer
-        aText.text = GetComponent<Question>()._questionData.a;
-        bText.text = GetComponent<Question>()._questionData.b;
-        cText.text = GetComponent<Question>()._questionData.c;
-        dText.text = GetComponent<Question>()._questionData.d;
-        solutionText.text = GetComponent<Question>()._questionData.solution;
-        solutionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_s);
-
-        changed = false;
-        PlayerMovement.gameIsPaused = true;
+      if (GetComponent<Question>()._questionData.question != null && !questionText.text.Equals(GetComponent<Question>()._questionData.question) && changed && animationFinished) {
+        showQuestion();
       }
+    }
+
+    public static void animationIsFinished() {
+      animationFinished = true;
+    }
+
+    public void showQuestion() {
+      questionBoard.SetActive(true);
+      Choice01.SetActive(true);
+      Choice02.SetActive(true);
+      Choice03.SetActive(true);
+      Choice04.SetActive(true);
+
+      questionText.text = GetComponent<Question>()._questionData.question;
+      //TODO: will need to change pathing on these images
+      questionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_q);
+      if (questionSprite != null) {
+        questionImage.gameObject.SetActive(true);
+        questionImage.sprite = questionSprite;
+      }
+      else {
+        questionScroll.sizeDelta = new Vector2(1000, 260);
+        questionScrollbar.sizeDelta = new Vector2(20, 260);
+      }
+      Debug.Log(questionSprite);
+      //if no image, want text to be bigger while question is up then need change after answer
+      aText.text = GetComponent<Question>()._questionData.a;
+      bText.text = GetComponent<Question>()._questionData.b;
+      cText.text = GetComponent<Question>()._questionData.c;
+      dText.text = GetComponent<Question>()._questionData.d;
+      solutionText.text = GetComponent<Question>()._questionData.solution;
+      solutionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_s);
+
+      changed = false;
+      animationFinished = false;
+      PlayerMovement.gameIsPaused = true;
     }
 
     public void newQuestion() {
@@ -96,6 +109,7 @@ public class ChoiceScript : MonoBehaviour
         foreach(GameObject monster in allMonsters) {
           if (monster.GetComponent<SpriteRenderer>().isVisible) {
             monster.GetComponent<Monster>().health+=-2;
+            monsterHealth.GetComponent<HealthBar>().SetHealth(-2);
           }
         }
       }
@@ -103,6 +117,7 @@ public class ChoiceScript : MonoBehaviour
         GetComponent<Question>().answeredQuestion(-1);
         questionText.text = "That's not the right answer. Take a look at the solution:";
         player.GetComponent<Player>().health+=-2;
+        playerHealth.GetComponent<HealthBar>().SetHealth(-2);
       }
 
       Choice01.SetActive(false);

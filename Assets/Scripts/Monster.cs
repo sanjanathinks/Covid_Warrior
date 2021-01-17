@@ -11,8 +11,10 @@ public class Monster : MonoBehaviour
     public GameObject main;
     public GameObject virtualCam;
     public Button attack;
+    public GameObject healthBar;
 
     public int health = 10;
+    public int maxHealth = 10;
     public float attackTime; //time player has been in range of monster attack
 
     private GameObject player;
@@ -20,6 +22,7 @@ public class Monster : MonoBehaviour
     void Awake() {
       player = GameObject.Find("player");
       attack.interactable = false;
+      healthBar.SetActive(false);
     }
 
     // Update is called once per frame
@@ -31,6 +34,7 @@ public class Monster : MonoBehaviour
         player.GetComponent<PlayerMovement>().setBattle(false);
         attack.interactable = false;
         attack.gameObject.SetActive(false);
+        healthBar.SetActive(false);
         Destroy(this.gameObject);
       }
     }
@@ -51,9 +55,9 @@ public class Monster : MonoBehaviour
           //if it's been enough time and it's close, monster should attack
           if (timeInRange > attackTime && !PlayerMovement.gameIsPaused) {
             attack.gameObject.SetActive(false);
-            //monster should attack
-            //play monster attack animation, when finished, call monsterAttack()
-            monsterAttack();
+            //TODO: play monster attack animation, when finished, call attackFinished()
+            main.GetComponent<ChoiceScript>().newQuestion();
+            attackFinished();
           }
         }
         else {
@@ -63,9 +67,9 @@ public class Monster : MonoBehaviour
       }
     }
 
-    public void monsterAttack()
-    {
-        main.GetComponent<ChoiceScript>().newQuestion();
+    public void attackFinished() {
+      PlayerMovement.gameIsPaused = true;
+      ChoiceScript.animationIsFinished();
     }
 
     //check distance to player
@@ -77,5 +81,6 @@ public class Monster : MonoBehaviour
       virtualCam.SetActive(true);
       attack.gameObject.SetActive(true);
       GetComponent<MonsterMove>().enabled = true;
+      healthBar.SetActive(true);
     }
 }
