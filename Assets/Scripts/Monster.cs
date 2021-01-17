@@ -34,6 +34,7 @@ public class Monster : MonoBehaviour
         player.GetComponent<PlayerMovement>().setBattle(false);
         attack.interactable = false;
         attack.gameObject.SetActive(false);
+        healthBar.SetActive(false);
         Destroy(this.gameObject);
       }
     }
