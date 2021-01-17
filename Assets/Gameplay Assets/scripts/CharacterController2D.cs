@@ -91,7 +91,7 @@ public class CharacterController2D : MonoBehaviour
 
 	private void SlopeCheckHorizontal(Vector2 checkPos) {
 		RaycastHit2D slopeHitFront = Physics2D.Raycast(checkPos, transform.right, slopeCheckDistance, m_WhatIsGround);
-		RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, - transform.right, slopeCheckDistance, m_WhatIsGround);
+		RaycastHit2D slopeHitBack = Physics2D.Raycast(checkPos, - transform.right, 0.5f, m_WhatIsGround);
 
 		if (slopeHitFront) {
 			isOnSlope = true;
@@ -99,7 +99,7 @@ public class CharacterController2D : MonoBehaviour
 			Debug.DrawRay(slopeHitFront.point, slopeHitFront.normal, Color.green);
 		} else if (slopeHitBack) {
 			isOnSlope = true;
-			slopeSideAngle = 0.0f;
+			slopeSideAngle = Vector2.Angle(slopeHitBack.normal, Vector2.up);
 			Debug.DrawRay(slopeHitBack.point, slopeHitBack.normal, Color.blue);
 		} else {
 			isOnSlope = false;
@@ -121,16 +121,17 @@ public class CharacterController2D : MonoBehaviour
 			Debug.DrawRay(hit.point, hit.normal, Color.white);
 			Debug.DrawRay(hit.point, slopeNormalPerpendicular, Color.red);
 
-			if (slopeDownAngle > maxAngle || slopeSideAngle > maxAngle) {
-				canWalk = false;
-				Debug.Log("down: " + slopeDownAngle + ", side: " + slopeSideAngle);
-			} else {
-				canWalk = true;
-			}
+		}
+
+		if (slopeDownAngle > maxAngle || slopeSideAngle > maxAngle) {
+			canWalk = false;
+			Debug.Log("down: " + slopeDownAngle + ", side: " + slopeSideAngle);
+		} else {
+			canWalk = true;
 		}
 
 		if (this.gameObject.name.Equals("player")) {
-			if (isOnSlope && xInput == 0.0f && canWalk) {
+			if (xInput == 0.0f && canWalk) {
 				m_Rigidbody2D.sharedMaterial = friction;
 			} else {
 				m_Rigidbody2D.sharedMaterial = slippery;
