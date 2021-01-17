@@ -8,6 +8,8 @@ using UnityEngine.Video;
 
 public class ChoiceScript : MonoBehaviour
 {
+    public static bool animationFinished;
+
     public TextMeshProUGUI questionText;
     public RectTransform questionScroll;
     public RectTransform questionScrollbar;
@@ -49,40 +51,45 @@ public class ChoiceScript : MonoBehaviour
     }
 
     void FixedUpdate() {
+      if (GetComponent<Question>()._questionData.question != null && !questionText.text.Equals(GetComponent<Question>()._questionData.question) && changed && animationFinished) {
+        showQuestion();
+      }
+    }
 
+    public static void animationIsFinished() {
+      animationFinished = true;
     }
 
     public void showQuestion() {
-      if (GetComponent<Question>()._questionData.question != null && !questionText.text.Equals(GetComponent<Question>()._questionData.question) && changed) {
-        questionBoard.SetActive(true);
-        Choice01.SetActive(true);
-        Choice02.SetActive(true);
-        Choice03.SetActive(true);
-        Choice04.SetActive(true);
+      questionBoard.SetActive(true);
+      Choice01.SetActive(true);
+      Choice02.SetActive(true);
+      Choice03.SetActive(true);
+      Choice04.SetActive(true);
 
-        questionText.text = GetComponent<Question>()._questionData.question;
-        //TODO: will need to change pathing on these images
-        questionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_q);
-        if (questionSprite != null) {
-          questionImage.gameObject.SetActive(true);
-          questionImage.sprite = questionSprite;
-        }
-        else {
-          questionScroll.sizeDelta = new Vector2(1000, 260);
-          questionScrollbar.sizeDelta = new Vector2(20, 260);
-        }
-        Debug.Log(questionSprite);
-        //if no image, want text to be bigger while question is up then need change after answer
-        aText.text = GetComponent<Question>()._questionData.a;
-        bText.text = GetComponent<Question>()._questionData.b;
-        cText.text = GetComponent<Question>()._questionData.c;
-        dText.text = GetComponent<Question>()._questionData.d;
-        solutionText.text = GetComponent<Question>()._questionData.solution;
-        solutionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_s);
-
-        changed = false;
-        PlayerMovement.gameIsPaused = true;
+      questionText.text = GetComponent<Question>()._questionData.question;
+      //TODO: will need to change pathing on these images
+      questionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_q);
+      if (questionSprite != null) {
+        questionImage.gameObject.SetActive(true);
+        questionImage.sprite = questionSprite;
       }
+      else {
+        questionScroll.sizeDelta = new Vector2(1000, 260);
+        questionScrollbar.sizeDelta = new Vector2(20, 260);
+      }
+      Debug.Log(questionSprite);
+      //if no image, want text to be bigger while question is up then need change after answer
+      aText.text = GetComponent<Question>()._questionData.a;
+      bText.text = GetComponent<Question>()._questionData.b;
+      cText.text = GetComponent<Question>()._questionData.c;
+      dText.text = GetComponent<Question>()._questionData.d;
+      solutionText.text = GetComponent<Question>()._questionData.solution;
+      solutionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_s);
+
+      changed = false;
+      animationFinished = false;
+      PlayerMovement.gameIsPaused = true;
     }
 
     public void newQuestion() {

@@ -51,9 +51,9 @@ public class Monster : MonoBehaviour
           //if it's been enough time and it's close, monster should attack
           if (timeInRange > attackTime && !PlayerMovement.gameIsPaused) {
             attack.gameObject.SetActive(false);
-            //monster should attack
-            //play monster attack animation, when finished, call monsterAttack()
-            monsterAttack();
+            //TODO: play monster attack animation, when finished, call attackFinished()
+            main.GetComponent<ChoiceScript>().newQuestion();
+            attackFinished();
           }
         }
         else {
@@ -63,10 +63,9 @@ public class Monster : MonoBehaviour
       }
     }
 
-    public void monsterAttack()
-    {
-        main.GetComponent<ChoiceScript>().newQuestion();
-        main.GetComponent<ChoiceScript>().showQuestion();
+    public void attackFinished() {
+      PlayerMovement.gameIsPaused = true;
+      ChoiceScript.animationIsFinished();
     }
 
     //check distance to player
