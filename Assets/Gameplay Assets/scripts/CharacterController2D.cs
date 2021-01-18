@@ -130,11 +130,13 @@ public class CharacterController2D : MonoBehaviour
 			canWalk = true;
 		}
 
-		if (this.gameObject.name.Equals("player")) {
-			if (xInput == 0.0f && canWalk) {
+		if (this.gameObject.tag.Equals("Player")) {
+			if (xInput == 0.0f && canWalk && isOnSlope) {
 				m_Rigidbody2D.sharedMaterial = friction;
+				m_Rigidbody2D.gravityScale = 0;
 			} else {
 				m_Rigidbody2D.sharedMaterial = slippery;
+				m_Rigidbody2D.gravityScale = 3;
 			}
 		}
 	}
