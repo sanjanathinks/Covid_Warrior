@@ -34,9 +34,12 @@ public class PlayerMovement : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
       main = GameObject.Find("GameObject");
-      attackButton = GameObject.Find("Attack").GetComponent<Button>();
-      attackButton.onClick.AddListener(attack);
-      attackButton.gameObject.SetActive(false);
+      if (GameObject.Find("Attack")!=null) {
+        attackButton = GameObject.Find("Attack").GetComponent<Button>();
+        Debug.Log(attackButton);
+        attackButton.onClick.AddListener(attack);
+        attackButton.gameObject.SetActive(false);
+      }
     }
 
     void Start() {
