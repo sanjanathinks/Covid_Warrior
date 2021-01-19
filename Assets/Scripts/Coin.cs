@@ -13,8 +13,8 @@ public class Coin : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    void OnTriggerEnter2D() {
-      if (!animator.GetBool("coin_collected")) {
+    void OnTriggerEnter2D(Collider2D col) {
+      if (!animator.GetBool("coin_collected") && col.gameObject == player) {
         animator.SetBool("coin_collected", true);
         player.GetComponent<Player>().coinCount(1);
       }
