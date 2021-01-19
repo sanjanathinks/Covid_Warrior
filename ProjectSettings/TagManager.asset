@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - monster
+  - SceneMgmt
+  - vcam
   layers:
   - Default
   - TransparentFX

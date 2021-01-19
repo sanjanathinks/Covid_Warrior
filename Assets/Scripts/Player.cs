@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using TMPro;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
         qIncorrect = new List<string>();
         qIncorrectRecent = new List<string>();
     }
-    
+
     //need this and OnSceneLoaded because object doesn't destroy
     void OnEnable()
     {
@@ -46,10 +47,31 @@ public class Player : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+      SetCameraFollow();
       GameObject usernameText = GameObject.Find("username");
       Debug.Log(usernameText);
       if (usernameText!=null && _playerData!=null) {
         usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
+      }
+      if (scene.name.Contains("level")) {
+        if (_playerData.progress.Length > 1) {
+          string location = _playerData.progress.Substring(2, 1);
+          if (location.Equals("1")) {
+            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
+          } else if (location.Equals("2")) {
+            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
+          }
+        }
+        else {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
+        }
+      }
+    }
+
+    private void SetCameraFollow() {
+      foreach (GameObject cam in GameObject.FindGameObjectsWithTag("vcam")) {
+        cam.GetComponent<CinemachineVirtualCamera>().Follow = gameObject.transform;
+        Debug.Log(cam);
       }
     }
 
@@ -87,7 +109,7 @@ public class Player : MonoBehaviour
       if (newUser && _playerData.class_code != null) {
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
-          SceneManager.LoadScene("level1"); //TODO: change this to be based on player progress
+          SceneManager.LoadScene("level1");
         }));
       }
       else if (newUser) {
@@ -112,7 +134,7 @@ public class Player : MonoBehaviour
           qCorrect.AddRange(_playerData.questions_correct);
           qIncorrect.AddRange(_playerData.questions_incorrect);
           Debug.Log(_playerData.Stringify());
-          SceneManager.LoadScene("level1"); //TODO: change this to be based on player info
+          SceneManager.LoadScene("level" + _playerData.progress.Substring(0,1)); //TODO: change this to be based on player info
         }
       }));
     }
