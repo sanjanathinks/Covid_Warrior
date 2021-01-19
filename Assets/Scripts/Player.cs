@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private List<string> qCorrect;
     private List<string> qIncorrect;
     private List<string> qIncorrectRecent;
+    private TextMeshProUGUI error;
 
     void Awake() {
       GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
@@ -50,9 +51,11 @@ public class Player : MonoBehaviour
       SetCameraFollow();
       GameObject usernameText = GameObject.Find("username");
       Debug.Log(usernameText);
+
       if (usernameText!=null && _playerData!=null) {
         usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
       }
+
       if (scene.name.Contains("level")) {
         if (_playerData.progress.Length > 1) {
           string location = _playerData.progress.Substring(2, 1);
@@ -65,6 +68,8 @@ public class Player : MonoBehaviour
         else {
           transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
         }
+      } else {
+        error = GameObject.Find("ErrorMessage").GetComponent<TextMeshProUGUI>();
       }
     }
 
@@ -97,6 +102,8 @@ public class Player : MonoBehaviour
         Debug.Log(result);
         if (result == null) {
           newUser = true;
+        } else {
+          newUser = false;
         }
       }));
     }
@@ -106,16 +113,18 @@ public class Player : MonoBehaviour
     }
 
     public void signup() {
-      if (newUser && _playerData.class_code != null) {
+      if (newUser && _playerData.class_code.Length > 0) {
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
           SceneManager.LoadScene("level1");
         }));
       }
       else if (newUser) {
+        error.text = "Please enter a class code.";
         Debug.Log("Please enter a class code.");
       }
       else {
+        error.text = "Username already exists. Please select a different username or log in.";
         Debug.Log("Username already exists. Please select a different username or log in.");
       }
     }
@@ -127,6 +136,7 @@ public class Player : MonoBehaviour
     public void login() {
       StartCoroutine(Download(_playerData.username, result => {
         if (result == null) {
+          error.text = "No registered user with this username. Please sign up or use a different username.";
           Debug.Log("No registered user with this username. Please sign up or use a different username.");
         }
         else {

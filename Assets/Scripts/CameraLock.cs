@@ -7,7 +7,7 @@ public class CameraLock : MonoBehaviour
     public Camera MainCamera;
     private PlayerMovement playerMov;
 
-    void Awake() {
+    void Start() {
       playerMov = GameObject.Find("player").GetComponent<PlayerMovement>();
     }
 
