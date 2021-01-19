@@ -4,6 +4,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
@@ -35,6 +36,21 @@ public class Player : MonoBehaviour
         qCorrect = new List<string>();
         qIncorrect = new List<string>();
         qIncorrectRecent = new List<string>();
+    }
+    
+    //need this and OnSceneLoaded because object doesn't destroy
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+      GameObject usernameText = GameObject.Find("username");
+      Debug.Log(usernameText);
+      if (usernameText!=null && _playerData!=null) {
+        usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
+      }
     }
 
     public void answered(string questionID, int correct) {
@@ -71,7 +87,7 @@ public class Player : MonoBehaviour
       if (newUser && _playerData.class_code != null) {
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
-          SceneManager.LoadScene("Game");
+          SceneManager.LoadScene("level1"); //TODO: change this to be based on player progress
         }));
       }
       else if (newUser) {
@@ -96,7 +112,7 @@ public class Player : MonoBehaviour
           qCorrect.AddRange(_playerData.questions_correct);
           qIncorrect.AddRange(_playerData.questions_incorrect);
           Debug.Log(_playerData.Stringify());
-          SceneManager.LoadScene("Game");
+          SceneManager.LoadScene("level1"); //TODO: change this to be based on player info
         }
       }));
     }
