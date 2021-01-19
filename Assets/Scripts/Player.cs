@@ -57,19 +57,23 @@ public class Player : MonoBehaviour
       }
 
       if (scene.name.Contains("level")) {
-        if (_playerData.progress.Length > 1) {
-          string location = _playerData.progress.Substring(2, 1);
-          if (location.Equals("1")) {
-            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
-          } else if (location.Equals("2")) {
-            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
-          }
-        }
-        else {
-          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
-        }
+        LevelLoaded();
       } else {
         error = GameObject.Find("ErrorMessage").GetComponent<TextMeshProUGUI>();
+      }
+    }
+
+    private void LevelLoaded() {
+      if (_playerData.progress!=null && _playerData.progress.Length > 1) {
+        string location = _playerData.progress.Substring(2, 1);
+        if (location.Equals("1")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
+        } else if (location.Equals("2")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
+        }
+      }
+      else {
+        transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
       }
     }
 
@@ -81,6 +85,14 @@ public class Player : MonoBehaviour
           cam.SetActive(false);
         }*/ //TODO: don't know if need this section - depends on how zoom cameras are handled
       }
+    }
+
+    public int coinCount() {
+      return _playerData.coins;
+    }
+
+    public void coinCount(int add) {
+      _playerData.coins+=add;
     }
 
     public void answered(string questionID, int correct) {
@@ -207,6 +219,7 @@ public class Player : MonoBehaviour
             }
             else if (callback != null)
             {
+              Debug.Log(request.downloadHandler.text);
                 callback.Invoke(PlayerData.Parse(request.downloadHandler.text));
             }
           }
