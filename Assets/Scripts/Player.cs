@@ -77,6 +77,9 @@ public class Player : MonoBehaviour
       foreach (GameObject cam in GameObject.FindGameObjectsWithTag("vcam")) {
         cam.GetComponent<CinemachineVirtualCamera>().Follow = gameObject.transform;
         Debug.Log(cam);
+        /**if (!cam.name.Equals("CM vcam1")) {
+          cam.SetActive(false);
+        }*/ //TODO: don't know if need this section - depends on how zoom cameras are handled
       }
     }
 
