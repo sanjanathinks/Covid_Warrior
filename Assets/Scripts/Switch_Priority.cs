@@ -6,29 +6,27 @@ using Cinemachine;
 
 public class Switch_Priority : MonoBehaviour
 {
-    [SerializeField]
-    private InputAction action;
-    [SerializeField]
-    private CinemachineVirtualCamera vcam1; //CM vcam1
-    [SerializeField]
-    private CinemachineVirtualCamera vcam2; //CM vcam2
+    //[SerializeField]
+    public CinemachineVirtualCamera vcam1; //CM vcam1
+    //[SerializeField]
+    public CinemachineVirtualCamera vcam2; //CM vcam2
 
     private bool in_vcam1 = true;
 
     void Start()
     {
-        action.performed += _ => SwitchP();
+        //action.performed += _ => SwitchP();
     }
-
-    private void OnEnable() {
-        action.Enable();
-    }
-
-    private void OnDisable() {
-        action.Disable();
+    
+    void Update() {
+        if (Input.GetKeyDown("0")) {
+            //print("space key was pressed");
+            SwitchP();
+        }
     }
 
     private void SwitchP() {
+        //Debug.Log("here 32");
         if (in_vcam1) {
             vcam1.Priority = 1;
             vcam2.Priority = 0;

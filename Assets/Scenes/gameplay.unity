@@ -938,6 +938,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4940307c7e6ae4b73b005e3fb004379f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _questionData:
+    id: 
+    question: 
+    type: 
+    img_q: 
+    level: 
+    a: 
+    b: 
+    c: 
+    d: 
+    correct: 
+    solution: 
+    img_s: 
+    explain_record: 
+    bridges_unit: 0
+    bridges_title: 
+    topic: 
+    nc_standard: 
+    nc_description: 
+    nc_standard_all: []
+    nc_description_all: []
+  level_number: 0
 --- !u!114 &230796449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,13 +972,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ed5e0f2e304f4564aafeb565eaffc12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TextBox: {fileID: 53778010}
+  questionText: {fileID: 0}
+  questionScroll: {fileID: 0}
+  questionScrollbar: {fileID: 0}
+  questionImage: {fileID: 0}
   Choice01: {fileID: 1444969162}
   Choice02: {fileID: 151876178}
   Choice03: {fileID: 1474169787}
   Choice04: {fileID: 416404110}
-  ChoiceMade: 255
-  canvas: {fileID: 1213769298}
+  questionBoard: {fileID: 0}
+  solutionText: {fileID: 0}
+  solutionScroll: {fileID: 0}
+  solutionImage: {fileID: 0}
+  solutionVideo: {fileID: 0}
+  next: {fileID: 0}
+  close: {fileID: 0}
+  videoRender: {fileID: 0}
+  videoPlay: {fileID: 0}
+  videoControls: []
+  attackButton: {fileID: 0}
+  changed: 0
 --- !u!4 &230796450
 Transform:
   m_ObjectHideFlags: 0
@@ -1000,22 +1035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 532133f9b2fb9432289fecf98698a43b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  action:
-    m_Name: Action
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 35b4bb04-3575-4e70-a5a4-2bcd661f8ecd
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: 05d8d9f1-2dc1-4d4f-a807-de3ad24ccf5f
-      m_Path: <Keyboard>/space
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Action
-      m_Flags: 0
   vcam1: {fileID: 1731100099}
   vcam2: {fileID: 1784953462}
 --- !u!4 &252427092
@@ -3662,7 +3681,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1213769299
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3911,6 +3930,7 @@ GameObject:
   - component: {fileID: 1331959172}
   - component: {fileID: 1331959175}
   - component: {fileID: 1331959176}
+  - component: {fileID: 1331959177}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3976,8 +3996,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331959171}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33.4, y: -9.1, z: -10}
+  m_LocalRotation: {x: 0.25461867, y: -0.0006391729, z: 0.00016829204, w: 0.9670413}
+  m_LocalPosition: {x: -33.388496, y: -4.1754627, z: -8.703379}
   m_LocalScale: {x: 0.94057, y: 0.94057, z: 0.94057}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4028,6 +4048,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 953a1324bc2414e20b605710db6c7de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1331959177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331959171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 532133f9b2fb9432289fecf98698a43b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  vcam1: {fileID: 1731100099}
+  vcam2: {fileID: 1784953462}
 --- !u!1 &1337494854
 GameObject:
   m_ObjectHideFlags: 0
@@ -5016,7 +5050,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 1
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1945378542}
@@ -5100,7 +5134,7 @@ MonoBehaviour:
   - m_Script
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
-  m_Priority: 10
+  m_Priority: 0
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1945378542}
@@ -5326,8 +5360,10 @@ MonoBehaviour:
   controller: {fileID: 1810132333}
   runSpeed: 20
   bounceForce: 200
-  totalChangeX: 10
-  totalChangeY: 2
+  xRight: 0
+  xLeft: 0
+  yDown: 0
+  yUp: 0
 --- !u!114 &1810132333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5390,6 +5426,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 230796447}
+  virtualCam: {fileID: 0}
+  attack: {fileID: 0}
+  health: 10
+  attackTime: 0
 --- !u!61 &1810132336
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5640,6 +5680,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   main: {fileID: 230796447}
+  virtualCam: {fileID: 0}
+  attack: {fileID: 0}
+  health: 10
+  attackTime: 0
 --- !u!114 &1915095003
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5654,7 +5698,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 1915095004}
   runSpeed: 20
-  totalChange: 10
+  xRight: 0
+  xLeft: 0
 --- !u!114 &1915095004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5974,6 +6019,7 @@ MonoBehaviour:
   speed: 1.5
   newUser: 0
   downloading: 0
+  health: 10
 --- !u!1 &1963359847
 GameObject:
   m_ObjectHideFlags: 0
