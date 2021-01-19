@@ -30,14 +30,11 @@ public class Player : MonoBehaviour
           Destroy(this.gameObject);
       }
       DontDestroyOnLoad(this.gameObject);
-    }
 
-    void Start()
-    {
-        _playerData = new PlayerData();
-        qCorrect = new List<string>();
-        qIncorrect = new List<string>();
-        qIncorrectRecent = new List<string>();
+      _playerData = new PlayerData();
+      qCorrect = new List<string>();
+      qIncorrect = new List<string>();
+      qIncorrectRecent = new List<string>();
     }
 
     //need this and OnSceneLoaded because object doesn't destroy
