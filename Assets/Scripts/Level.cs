@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Level : MonoBehaviour
 {
@@ -17,6 +18,12 @@ public class Level : MonoBehaviour
     public Vector3 playerStartPosition;
     public Vector3 playerCheckpoint1;
     public Vector3 playerCheckpoint2;
+
+    public TextMeshProUGUI levelNum;
+
+    void Start() {
+      levelNum.text = "Level " + level_number;
+    }
 
     public int getLevelStats(string variableName) {
       return (int)this.GetType().GetField(variableName).GetValue(this);
