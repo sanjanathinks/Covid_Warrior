@@ -9566,6 +9566,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5385194103500034409, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4a0692e94c9eb4d11b7544991e71dbeb,
+        type: 3}
+    - target: {fileID: 5385194103868948740, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c2a452d2e5b2247a191dd7e8a348722a,
+        type: 3}
     - target: {fileID: 5385194103870614761, guid: 9162ff53834374cd3bef737b18e4eb23,
         type: 3}
       propertyPath: m_text
@@ -11557,6 +11569,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5385194103500034409, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4a0692e94c9eb4d11b7544991e71dbeb,
+        type: 3}
+    - target: {fileID: 5385194103868948740, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c2a452d2e5b2247a191dd7e8a348722a,
+        type: 3}
     - target: {fileID: 5385194103870614761, guid: 9162ff53834374cd3bef737b18e4eb23,
         type: 3}
       propertyPath: m_text
@@ -16178,7 +16202,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -40}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 9.5, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1711891367
@@ -16199,7 +16223,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 90a2dde0942123c4ebb9c4af580c5818, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c0ec83744639540a187d44f365001421, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -16621,7 +16645,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1153663223}
   m_HandleRect: {fileID: 1153663222}
   m_Direction: 2
-  m_Value: 1.0000002
+  m_Value: 1.0000001
   m_Size: 0.5136587
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19087,6 +19111,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 280126628}
     m_Modifications:
+    - target: {fileID: 5385194102323572749, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5385194103403793682, guid: 9162ff53834374cd3bef737b18e4eb23,
         type: 3}
       propertyPath: m_Name
@@ -19147,10 +19176,32 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5385194103500034409, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4a0692e94c9eb4d11b7544991e71dbeb,
+        type: 3}
+    - target: {fileID: 5385194103500034415, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5385194103868948740, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: c2a452d2e5b2247a191dd7e8a348722a,
+        type: 3}
     - target: {fileID: 5385194103870614761, guid: 9162ff53834374cd3bef737b18e4eb23,
         type: 3}
       propertyPath: m_text
       value: Fact Text 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5385194103870614767, guid: 9162ff53834374cd3bef737b18e4eb23,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9162ff53834374cd3bef737b18e4eb23, type: 3}
