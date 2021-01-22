@@ -7,16 +7,18 @@ using System.Reflection;
 public class Question : MonoBehaviour
 {
     public QuestionData _questionData;
+    public int level_number;
     private GameObject player;
     private bool generating;
 
-    private Level currentLevel;
+    private LevelStats currentLevel;
 
     void Start()
     {
       player = GameObject.Find("player");
       _questionData = new QuestionData();
-      currentLevel = GetComponent<Level>();
+      currentLevel = GameObject.Find("LevelStats").GetComponent<LevelStats>();
+      currentLevel.newLevel(level_number);
     }
 
     public void generateQuestion(string type, string level) {

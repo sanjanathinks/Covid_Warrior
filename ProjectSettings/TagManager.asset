@@ -7,6 +7,7 @@ TagManager:
   - monster
   - SceneMgmt
   - vcam
+  - stats
   layers:
   - Default
   - TransparentFX
