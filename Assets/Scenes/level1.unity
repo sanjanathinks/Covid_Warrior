@@ -9517,6 +9517,7 @@ MonoBehaviour:
   attack: {fileID: 1564347751}
   healthBar: {fileID: 150816394}
   isAttacking: 0
+  animator: {fileID: 0}
   health: 10
   maxHealth: 10
   attackTime: 5
@@ -11472,6 +11473,7 @@ MonoBehaviour:
   attack: {fileID: 1564347751}
   healthBar: {fileID: 150816394}
   isAttacking: 0
+  animator: {fileID: 1911470254}
   health: 10
   maxHealth: 10
   attackTime: 5

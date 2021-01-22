@@ -13,6 +13,7 @@ public class Monster : MonoBehaviour
     public Button attack;
     public GameObject healthBar;
     public bool isAttacking;
+    public Animator animator;
 
     public int health = 10;
     public int maxHealth = 10;
@@ -57,9 +58,9 @@ public class Monster : MonoBehaviour
           if (timeInRange > attackTime && !PlayerMovement.gameIsPaused && !player.GetComponent<PlayerMovement>().isAttacking) {
             isAttacking = true;
             attack.gameObject.SetActive(false);
-            //TODO: play monster attack animation, when finished, call attackFinished()
+            animator.SetBool("isAttacking", true);
             main.GetComponent<ChoiceScript>().newQuestion();
-            attackFinished();
+            PlayerMovement.gameIsPaused = true;
           }
         }
         else {
@@ -70,7 +71,7 @@ public class Monster : MonoBehaviour
     }
 
     public void attackFinished() {
-      PlayerMovement.gameIsPaused = true;
+      animator.SetBool("isAttacking", false);
       ChoiceScript.animationIsFinished();
       isAttacking = false;
     }

@@ -118,12 +118,12 @@ public class PlayerMovement : MonoBehaviour
           main.GetComponent<ChoiceScript>().newQuestion();
           animator.SetBool("isAttacking", true);
           attackButton.gameObject.SetActive(false);
+          gameIsPaused = true;
         }
       }
     }
 
     public void attackFinished() {
-      gameIsPaused = true;
       animator.SetBool("isAttacking", false);
       ChoiceScript.animationIsFinished();
       isAttacking = false;
