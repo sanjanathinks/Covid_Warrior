@@ -942,6 +942,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f3551c4bd33b463594c5370ead290f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level_number: 0
+  beginner_correct: 0
+  intermediate_correct: 0
+  advanced_correct: 0
+  beginner_incorrect: 0
+  intermediate_incorrect: 0
+  advanced_incorrect: 0
 --- !u!4 &128937159
 Transform:
   m_ObjectHideFlags: 0
@@ -11324,6 +11331,7 @@ GameObject:
   - component: {fileID: 1911470250}
   - component: {fileID: 1911470249}
   - component: {fileID: 1911470252}
+  - component: {fileID: 1911470254}
   m_Layer: 0
   m_Name: monster1
   m_TagString: monster
@@ -11504,6 +11512,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!95 &1911470254
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1911470246}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 29f651e8999004f829f4cb45dd01c7db, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1945378535
 GameObject:
   m_ObjectHideFlags: 0
