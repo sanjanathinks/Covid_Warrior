@@ -45,14 +45,6 @@ public class Player : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-      SetCameraFollow();
-      GameObject usernameText = GameObject.Find("username");
-      Debug.Log(usernameText);
-
-      if (usernameText!=null && _playerData!=null) {
-        usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
-      }
-
       if (scene.name.Contains("level")) {
         LevelLoaded();
       } else {
@@ -61,6 +53,12 @@ public class Player : MonoBehaviour
     }
 
     private void LevelLoaded() {
+      SetCameraFollow();
+      GameObject usernameText = GameObject.Find("username");
+      if (usernameText!=null && _playerData!=null) {
+        usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
+      }
+      
       if (_playerData.progress!=null && _playerData.progress.Length > 1) {
         string location = _playerData.progress.Substring(2, 1);
         if (location.Equals("1")) {
@@ -106,6 +104,11 @@ public class Player : MonoBehaviour
       StartCoroutine(UpdateInfo(_playerData.Stringify(), updated => {
         Debug.Log(updated);
       }));
+    }
+
+    public void updateUser(string prog) {
+      _playerData.progress = prog;
+      updateUser();
     }
 
     public void chooseUsername(string username) {
