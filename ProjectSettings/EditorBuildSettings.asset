@@ -14,12 +14,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Login.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Demo.unity
     guid: a5a06ca349139534f8cc1094d2fc7747
   - enabled: 1
     path: Assets/Scenes/level1.unity
     guid: 80a016cf1ff8b43cba57e186cab92a1a
+  - enabled: 1
+    path: Assets/Scenes/transition1.unity
+    guid: e47530f4723ce486fbd806113e6dcc27
   - enabled: 1
     path: Assets/Scenes/level2.unity
     guid: 780cdfe1e43214f319b8e0ad95d9db9d
