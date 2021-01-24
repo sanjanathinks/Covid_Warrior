@@ -7,4 +7,5 @@ public class Level : MonoBehaviour
     public Vector3 playerStartPosition;
     public Vector3 playerCheckpoint1;
     public Vector3 playerCheckpoint2;
+    public Vector3 playerCheckpoint3;
 }

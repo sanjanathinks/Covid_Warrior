@@ -578,8 +578,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStartPosition: {x: -26.61, y: -7.6, z: 0}
-  playerCheckpoint1: {x: 0, y: 0, z: 0}
-  playerCheckpoint2: {x: 0, y: 0, z: 0}
+  playerCheckpoint1: {x: 25.4, y: -4, z: 0}
+  playerCheckpoint2: {x: 140.74, y: 34.53, z: 0}
 --- !u!114 &77931901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9521,6 +9521,7 @@ MonoBehaviour:
   health: 10
   maxHealth: 10
   attackTime: 5
+  progress: 1.2
 --- !u!50 &1506175917
 Rigidbody2D:
   serializedVersion: 4
@@ -11548,6 +11549,7 @@ MonoBehaviour:
   health: 10
   maxHealth: 10
   attackTime: 5
+  progress: 1.1
 --- !u!70 &1911470252
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

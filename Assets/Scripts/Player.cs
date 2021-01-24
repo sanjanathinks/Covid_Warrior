@@ -58,13 +58,15 @@ public class Player : MonoBehaviour
       if (usernameText!=null && _playerData!=null) {
         usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
       }
-      
+
       if (_playerData.progress!=null && _playerData.progress.Length > 1) {
         string location = _playerData.progress.Substring(2, 1);
         if (location.Equals("1")) {
           transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
         } else if (location.Equals("2")) {
           transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
+        } else if (location.Equals("3")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint3;
         }
       }
       else {
@@ -127,8 +129,13 @@ public class Player : MonoBehaviour
       _playerData.class_code = classCode;
     }
 
+    public string getProgress() {
+      return _playerData.progress;
+    }
+
     public void signup() {
       if (newUser && _playerData.class_code.Length > 0) {
+        _playerData.progress = "1";
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
           SceneManager.LoadScene("level1");
