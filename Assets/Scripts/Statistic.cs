@@ -24,7 +24,7 @@ public class Statistic : MonoBehaviour
           percent = (double)correct/(correct+incorrect)*100;
         }
         if (percent == 0) {
-          GetComponent<TextMeshProUGUI>().text = "No " + difficulty + " question in this level";
+          GetComponent<TextMeshProUGUI>().text = "No " + difficulty + " questions in this level";
         } else {
           GetComponent<TextMeshProUGUI>().text = Char.ToUpper(difficulty[0]) + difficulty.Substring(1) +
             "  " + correct + "/" + (correct + incorrect) + " = " + Math.Round(percent, MidpointRounding.AwayFromZero) + "% correct";
