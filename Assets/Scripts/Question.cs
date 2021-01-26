@@ -10,14 +10,13 @@ public class Question : MonoBehaviour
     private GameObject player;
     private bool generating;
 
-    public Level currentLevel;
-    public int level_number;
+    private Level currentLevel;
 
     void Start()
     {
       player = GameObject.Find("player");
       _questionData = new QuestionData();
-      currentLevel = new Level(level_number);
+      currentLevel = GetComponent<Level>();
     }
 
     public void generateQuestion(string type, string level) {

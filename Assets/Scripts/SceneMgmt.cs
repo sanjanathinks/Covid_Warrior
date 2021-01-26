@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class SceneMgmt : MonoBehaviour
 {
     private GameObject player;
+    public TextMeshProUGUI error;
 
     void Start()
     {
@@ -30,10 +32,12 @@ public class SceneMgmt : MonoBehaviour
 
     public void username(string name) {
       player.GetComponent<Player>().chooseUsername(name);
+      error.text = "";
     }
 
     public void loginUsername(string name) {
       player.GetComponent<Player>().loginUsername(name);
+      error.text = "";
     }
 
     public void login() {

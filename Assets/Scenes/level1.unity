@@ -477,6 +477,7 @@ GameObject:
   - component: {fileID: 57274858}
   - component: {fileID: 57274860}
   - component: {fileID: 57274859}
+  - component: {fileID: 57274861}
   m_Layer: 5
   m_Name: coinNumber
   m_TagString: Untagged
@@ -621,6 +622,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57274857}
   m_CullTransparentMesh: 0
+--- !u!114 &57274861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 57274857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 970ff5d31829c453d8c006bab751cc84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &90919973
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,6 +1086,7 @@ GameObject:
   - component: {fileID: 199060493}
   - component: {fileID: 199060491}
   - component: {fileID: 199060492}
+  - component: {fileID: 199060494}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1150,7 +1164,6 @@ MonoBehaviour:
     nc_description: 
     nc_standard_all: []
     nc_description_all: []
-  level_number: 1
 --- !u!4 &199060493
 Transform:
   m_ObjectHideFlags: 0
@@ -1165,6 +1178,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &199060494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199060490}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec0f144124f574079806e50d12311a40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level_number: 1
+  beginner_correct: 0
+  intermediate_correct: 0
+  advanced_correct: 0
+  beginner_incorrect: 0
+  intermediate_incorrect: 0
+  advanced_incorrect: 0
+  playerStartPosition: {x: -26.61, y: -7.6, z: 0}
+  playerCheckpoint1: {x: 0, y: 0, z: 0}
+  playerCheckpoint2: {x: 0, y: 0, z: 0}
 --- !u!1 &200520266
 GameObject:
   m_ObjectHideFlags: 0
@@ -4654,7 +4689,7 @@ GameObject:
   - component: {fileID: 917938389}
   m_Layer: 0
   m_Name: CM vcam3
-  m_TagString: Untagged
+  m_TagString: vcam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6755,7 +6790,7 @@ GameObject:
   - component: {fileID: 1220323273}
   m_Layer: 0
   m_Name: CM vcam2
-  m_TagString: Untagged
+  m_TagString: vcam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10232,7 +10267,7 @@ GameObject:
   - component: {fileID: 1731100101}
   m_Layer: 0
   m_Name: CM vcam1
-  m_TagString: Untagged
+  m_TagString: vcam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
