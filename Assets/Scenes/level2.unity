@@ -16925,6 +16925,7 @@ MonoBehaviour:
   playerStartPosition: {x: -80.7, y: 42.5, z: 0}
   playerCheckpoint1: {x: 0, y: 0, z: 0}
   playerCheckpoint2: {x: 0, y: 0, z: 0}
+  playerCheckpoint3: {x: 0, y: 0, z: 0}
 --- !u!114 &1843671845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17669,6 +17670,7 @@ MonoBehaviour:
   slippery: {fileID: 6200000, guid: 54a837cf8bb134544b7b5d36eeaaf014, type: 2}
   friction: {fileID: 6200000, guid: 7c27f70e4b28d4e6f91b49fa3d564830, type: 2}
   maxAngle: 60
+  jumpLength: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -17682,6 +17684,20 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+  InAirEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1945378543}
+        m_MethodName: InAir
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
   OnCrouchEvent:
     m_PersistentCalls:

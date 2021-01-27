@@ -34,11 +34,15 @@ public class CharacterController2D : MonoBehaviour
 	private float slopeSideAngle;
 	private float xInput;
 	private bool canWalk;
+	private float jumpStart;
+	private float currentTime;
+	public float jumpLength;
 
 	[Header("Events")]
 	[Space]
 
 	public UnityEvent OnLandEvent;
+	public UnityEvent InAirEvent;
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
@@ -57,13 +61,17 @@ public class CharacterController2D : MonoBehaviour
 
 		if (OnCrouchEvent == null)
 			OnCrouchEvent = new BoolEvent();
+
+		if (InAirEvent == null)
+			InAirEvent = new UnityEvent();
 	}
 
 	private void Update() {
 		if (this.gameObject.name.Equals("player")) xInput = Input.GetAxisRaw("Horizontal");
+		currentTime = Time.deltaTime;
 	}
 
-	private void FixedUpdate()
+	private void LateUpdate()
 	{
 		SlopeCheck();
 		bool wasGrounded = m_Grounded;
@@ -74,13 +82,26 @@ public class CharacterController2D : MonoBehaviour
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
 		{
-			if (colliders[i].gameObject != gameObject)
+			if (!colliders[i].gameObject.name.Equals(gameObject.name))
 			{
 				m_Grounded = true;
-				if (!wasGrounded)
+				Debug.Log(currentTime - jumpStart);
+				if (!wasGrounded || currentTime - jumpStart >= jumpLength) {
+					//thinks landing too fast, so jump ends up short?
 					OnLandEvent.Invoke();
+					Debug.Log(colliders[i].gameObject.name);
+				}
 			}
 		}
+		if (colliders.Length == 0) {
+			InAirEvent.Invoke();
+		}
+	}
+
+	void OnDrawGizmos() {
+		Gizmos.color = Color.red;
+		//Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
+		Gizmos.DrawWireSphere(m_GroundCheck.position, k_GroundedRadius);
 	}
 
 	private void SlopeCheck() {
@@ -125,7 +146,6 @@ public class CharacterController2D : MonoBehaviour
 
 		if (slopeDownAngle > maxAngle || slopeSideAngle > maxAngle) {
 			canWalk = false;
-			Debug.Log("down: " + slopeDownAngle + ", side: " + slopeSideAngle);
 		} else {
 			canWalk = true;
 		}
@@ -221,6 +241,7 @@ public class CharacterController2D : MonoBehaviour
 			// Add a vertical force to the player.
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
+			jumpStart = currentTime;
 		}
 	}
 

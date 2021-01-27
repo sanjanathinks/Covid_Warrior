@@ -46,6 +46,12 @@ public class PlayerMovement : MonoBehaviour
     void Start() {
       width = GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
       height = GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
+      AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+      foreach(AnimationClip clip in clips) {
+        if (clip.name.Equals("player_jump")) {
+          controller.jumpLength = clip.length;
+        }
+      }
     }
 
     void Update()
@@ -58,6 +64,8 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetButtonDown("Jump")){
            jump = true;
            animator.SetBool("isJump", true);
+           InAir(true);
+           Debug.Log("jump");
         }
 
         if (Input.GetButtonDown("Crouch")){
@@ -78,7 +86,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Onlanding () {
+      Debug.Log("landing");
       animator.SetBool("isJump", false);
+      InAir(false);
     }
 
     public void OnCrouching (bool isCrouching)
@@ -86,6 +96,10 @@ public class PlayerMovement : MonoBehaviour
       animator.SetBool("isCrouching", isCrouching);
     }
 
+    public void InAir(bool inAir)
+    {
+      animator.SetBool("inAir", inAir);
+    }
 
     void FixedUpdate()
     {
@@ -131,6 +145,7 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate() {
       if (battle) {
+        Debug.Log("battle");
         Vector3 pos = transform.position;
         float x = pos.x;
         pos.x = Mathf.Clamp(pos.x, screenPosition.x*2 - screenBounds.x + width, screenBounds.x - width);
