@@ -45,14 +45,6 @@ public class Player : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-      SetCameraFollow();
-      GameObject usernameText = GameObject.Find("username");
-      Debug.Log(usernameText);
-
-      if (usernameText!=null && _playerData!=null) {
-        usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
-      }
-
       if (scene.name.Contains("level")) {
         LevelLoaded();
       } else {
@@ -61,12 +53,20 @@ public class Player : MonoBehaviour
     }
 
     private void LevelLoaded() {
+      SetCameraFollow();
+      GameObject usernameText = GameObject.Find("username");
+      if (usernameText!=null && _playerData!=null) {
+        usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
+      }
+
       if (_playerData.progress!=null && _playerData.progress.Length > 1) {
         string location = _playerData.progress.Substring(2, 1);
         if (location.Equals("1")) {
           transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
         } else if (location.Equals("2")) {
           transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
+        } else if (location.Equals("3")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint3;
         }
       }
       else {
@@ -108,6 +108,11 @@ public class Player : MonoBehaviour
       }));
     }
 
+    public void updateUser(string prog) {
+      _playerData.progress = prog;
+      updateUser();
+    }
+
     public void chooseUsername(string username) {
       _playerData.username = username;
       StartCoroutine(Download(_playerData.username, result => {
@@ -124,8 +129,13 @@ public class Player : MonoBehaviour
       _playerData.class_code = classCode;
     }
 
+    public string getProgress() {
+      return _playerData.progress;
+    }
+
     public void signup() {
       if (newUser && _playerData.class_code.Length > 0) {
+        _playerData.progress = "1";
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
           SceneManager.LoadScene("level1");

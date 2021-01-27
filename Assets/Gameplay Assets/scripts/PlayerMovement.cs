@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float height;
     private GameObject main;
     private Button attackButton;
+    private GameObject currentMonster;
 
     //need this and OnSceneLoaded because object doesn't destroy
     void OnEnable()
@@ -93,6 +94,10 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
         jump = false;
       }
+      if (isAttacking && currentMonster!=null) {
+        float xDiff = currentMonster.transform.position.x - transform.position.x;
+        controller.Flip(xDiff > 0);
+      }
     }
 
     public void setBattle(bool value, Vector3 bounds, Vector3 position) {
@@ -108,16 +113,17 @@ public class PlayerMovement : MonoBehaviour
     void attack() {
       foreach (GameObject monster in GameObject.FindGameObjectsWithTag("monster")) {
         if (monster.GetComponent<Renderer>().isVisible && !monster.GetComponent<Monster>().isAttacking) {
+          currentMonster = monster;
           isAttacking = true;
           main.GetComponent<ChoiceScript>().newQuestion();
           animator.SetBool("isAttacking", true);
           attackButton.gameObject.SetActive(false);
+          gameIsPaused = true;
         }
       }
     }
 
     public void attackFinished() {
-      gameIsPaused = true;
       animator.SetBool("isAttacking", false);
       ChoiceScript.animationIsFinished();
       isAttacking = false;

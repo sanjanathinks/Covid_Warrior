@@ -245,4 +245,11 @@ public class CharacterController2D : MonoBehaviour
 		//transform.localScale = theScale;
 		transform.Rotate(0.0f, 180.0f, 0.0f);
 	}
+
+	public void Flip(bool xDiff)
+	{
+		if (xDiff != m_FacingRight) {
+			Flip();
+		}
+	}
 }
