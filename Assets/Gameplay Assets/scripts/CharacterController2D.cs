@@ -85,11 +85,8 @@ public class CharacterController2D : MonoBehaviour
 			if (!colliders[i].gameObject.name.Equals(gameObject.name))
 			{
 				m_Grounded = true;
-				Debug.Log(currentTime - jumpStart);
 				if (!wasGrounded || currentTime - jumpStart >= jumpLength) {
-					//thinks landing too fast, so jump ends up short?
 					OnLandEvent.Invoke();
-					Debug.Log(colliders[i].gameObject.name);
 				}
 			}
 		}

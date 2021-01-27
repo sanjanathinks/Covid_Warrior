@@ -37,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
       main = GameObject.Find("GameObject");
       if (GameObject.Find("Attack")!=null) {
         attackButton = GameObject.Find("Attack").GetComponent<Button>();
-        Debug.Log(attackButton);
         attackButton.onClick.AddListener(attack);
         attackButton.gameObject.SetActive(false);
       }
@@ -65,7 +64,6 @@ public class PlayerMovement : MonoBehaviour
            jump = true;
            animator.SetBool("isJump", true);
            InAir(true);
-           Debug.Log("jump");
         }
 
         if (Input.GetButtonDown("Crouch")){
@@ -86,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Onlanding () {
-      Debug.Log("landing");
       animator.SetBool("isJump", false);
       InAir(false);
     }
@@ -145,7 +142,6 @@ public class PlayerMovement : MonoBehaviour
 
     void LateUpdate() {
       if (battle) {
-        Debug.Log("battle");
         Vector3 pos = transform.position;
         float x = pos.x;
         pos.x = Mathf.Clamp(pos.x, screenPosition.x*2 - screenBounds.x + width, screenBounds.x - width);

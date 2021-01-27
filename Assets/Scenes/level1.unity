@@ -580,6 +580,7 @@ MonoBehaviour:
   playerStartPosition: {x: -26.61, y: -7.6, z: 0}
   playerCheckpoint1: {x: 25.4, y: -4, z: 0}
   playerCheckpoint2: {x: 140.74, y: 34.53, z: 0}
+  playerCheckpoint3: {x: 0, y: 0, z: 0}
 --- !u!114 &77931901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9490,11 +9491,15 @@ MonoBehaviour:
   m_GroundCheck: {fileID: 133768349}
   m_CeilingCheck: {fileID: 273359576}
   m_CrouchDisableCollider: {fileID: 0}
-  slopeCheckDistance: 0
+  slopeCheckDistance: 1
   slippery: {fileID: 0}
   friction: {fileID: 0}
-  maxAngle: 0
+  maxAngle: 180
+  jumpLength: 0
   OnLandEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  InAirEvent:
     m_PersistentCalls:
       m_Calls: []
   OnCrouchEvent:
@@ -11522,7 +11527,11 @@ MonoBehaviour:
   slippery: {fileID: 0}
   friction: {fileID: 0}
   maxAngle: 0
+  jumpLength: 0
   OnLandEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  InAirEvent:
     m_PersistentCalls:
       m_Calls: []
   OnCrouchEvent:
@@ -11657,6 +11666,7 @@ MonoBehaviour:
   slippery: {fileID: 6200000, guid: 54a837cf8bb134544b7b5d36eeaaf014, type: 2}
   friction: {fileID: 6200000, guid: 7c27f70e4b28d4e6f91b49fa3d564830, type: 2}
   maxAngle: 45
+  jumpLength: 0
   OnLandEvent:
     m_PersistentCalls:
       m_Calls:
@@ -11671,6 +11681,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  InAirEvent:
+    m_PersistentCalls:
+      m_Calls: []
   OnCrouchEvent:
     m_PersistentCalls:
       m_Calls: []
