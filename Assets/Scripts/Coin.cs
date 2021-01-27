@@ -5,18 +5,18 @@ using UnityEngine;
 public class Coin : MonoBehaviour
 {
     private GameObject player;
-    private Animator animator;
+    private bool hit;
 
     void Start()
     {
         player = GameObject.Find("player");
-        animator = GetComponent<Animator>();
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-      if (!animator.GetBool("coin_collected") && col.gameObject == player) {
-        animator.SetBool("coin_collected", true);
+      if (col.gameObject == player && !hit) {
         player.GetComponent<Player>().coinCount(1);
+        hit = true;
+        Destroy(this.gameObject);
       }
     }
 }
