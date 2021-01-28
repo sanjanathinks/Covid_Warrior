@@ -29,7 +29,7 @@ public class Monster : MonoBehaviour
     }
 
     void Start() {
-      if (player.GetComponent<Player>().getProgress().CompareTo(progress) >= 0) {
+      if (player.GetComponent<Player>().getProgress()!=null && player.GetComponent<Player>().getProgress().CompareTo(progress) >= 0) {
         Destroy(this.gameObject);
       }
     }
