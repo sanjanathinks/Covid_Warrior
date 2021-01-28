@@ -25,6 +25,67 @@
 *.shadervariants -text merge=unityyamlmerge diff
 
 # Image formats
+<<<<<<< HEAD
+*.psd -text
+*.jpg -text
+*.png -text
+*.gif  -text
+*.bmp  -text
+*.tga  -text
+*.tiff  -text
+*.tif  -text
+*.iff  -text
+*.pict  -text
+*.dds  -text
+*.xcf  -text
+
+# Audio formats
+*.mp3  -text
+*.ogg  -text
+*.wav  -text
+*.aiff  -text
+*.aif  -text
+*.mod  -text
+*.it  -text
+*.s3m  -text
+*.xm  -text
+
+# Video formats
+*.mov  -text
+*.avi  -text
+*.asf  -text
+*.mpg  -text
+*.mpeg  -text
+*.mp4  -text
+
+# 3D formats
+*.fbx  -text
+*.obj  -text
+*.max  -text
+*.blend  -text
+*.dae  -text
+*.mb  -text
+*.ma  -text
+*.3ds  -text
+*.dfx  -text
+*.c4d  -text
+*.lwo  -text
+*.lwo2  -text
+*.abc  -text
+*.3dm  -text
+
+# Build
+*.dll  -text
+*.pdb  -text
+*.mdb  -text
+
+# Packaging
+*.zip  -text
+*.7z  -text
+*.gz  -text
+*.rar  -text
+*.tar  -text
+=======
 *.png -text
 *.gif -text
 *.bmp -text
@@ -81,3 +142,4 @@
 *.gz -text
 *.rar -text
 *.tar -text
+>>>>>>> selena

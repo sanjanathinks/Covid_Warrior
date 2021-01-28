@@ -8,6 +8,8 @@ TagManager:
   - SceneMgmt
   - vcam
   - stats
+  - SceneMgmt
+  - vcam
   layers:
   - Default
   - TransparentFX
