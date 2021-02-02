@@ -14,14 +14,6 @@ public class SceneMgmt : MonoBehaviour
       player = GameObject.Find("player");
     }
 
-    public void goToSignup() {
-      SceneManager.LoadScene("Signup");
-    }
-
-    public void goToLogin() {
-      SceneManager.LoadScene("Login");
-    }
-
     public void signup() {
       player.GetComponent<Player>().signup();
     }
@@ -42,5 +34,9 @@ public class SceneMgmt : MonoBehaviour
 
     public void login() {
       player.GetComponent<Player>().login();
+    }
+
+    public void goTo(string scene) {
+      SceneManager.LoadScene(scene);
     }
 }

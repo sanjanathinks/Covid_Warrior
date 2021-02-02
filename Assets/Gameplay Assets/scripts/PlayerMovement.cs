@@ -70,7 +70,6 @@ public class PlayerMovement : MonoBehaviour
            crouch = true;
            animator.SetBool("isCrouching", true);
         }
-
         else if (Input.GetButtonUp("Crouch")) {
             crouch = false;
         }
