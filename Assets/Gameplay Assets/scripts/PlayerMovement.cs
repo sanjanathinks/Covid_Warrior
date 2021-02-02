@@ -73,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
 
         else if (Input.GetButtonUp("Crouch")) {
             crouch = false;
-            animator.SetBool("isCrouching", false);
         }
       }
       if (gameIsPaused) {
@@ -90,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnCrouching (bool isCrouching)
     {
+      Debug.Log("crouch " + isCrouching);
       animator.SetBool("isCrouching", isCrouching);
     }
 

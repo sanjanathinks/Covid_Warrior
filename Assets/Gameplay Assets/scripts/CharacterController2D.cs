@@ -16,7 +16,7 @@ public class CharacterController2D : MonoBehaviour
 
 	const float k_GroundedRadius = .55f; // Radius of the overlap circle to determine if grounded
 	private bool m_Grounded;            // Whether or not the player is grounded.
-	const float k_CeilingRadius = .2f; // Radius of the overlap circle to determine if the player can stand up
+	const float k_CeilingRadius = .55f; // Radius of the overlap circle to determine if the player can stand up
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
@@ -99,6 +99,7 @@ public class CharacterController2D : MonoBehaviour
 		Gizmos.color = Color.red;
 		//Use the same vars you use to draw your Overlap SPhere to draw your Wire Sphere.
 		Gizmos.DrawWireSphere(m_GroundCheck.position, k_GroundedRadius);
+		Gizmos.DrawWireSphere(m_CeilingCheck.position, k_CeilingRadius);
 	}
 
 	private void SlopeCheck() {
@@ -166,55 +167,40 @@ public class CharacterController2D : MonoBehaviour
 	public void Move(float move, bool crouch, bool jump)
 	{
 		// If crouching, check to see if the character can stand up
-		 //if (m_wasCrouching)
-
-			// If the character has a ceiling preventing them from standing up, keep them crouching
-			/*if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
-			{
-				m_wasCrouching = true;
-			}*/
-
-				if (!crouch)
-					{
- // If the character has a ceiling preventing them from standing up, keep them crouching
- 				if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
- 				{
-	 				crouch = true;
- 				}
+		if (m_wasCrouching) {
+				// If the character has a ceiling preventing them from standing up, keep them crouching
+				if (Physics2D.OverlapCircle(m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround))
+				{
+					crouch = true;
 				}
-
+		}
 
 		//only control the player if grounded or airControl is turned on
 		if (m_Grounded || m_AirControl)
 		{
-
 			// If crouching
 			if (crouch)
 			{
 				if (!m_wasCrouching)
 				{
-					m_wasCrouching = true;
 					OnCrouchEvent.Invoke(true);
 				}
-
 				// Reduce the speed by the crouchSpeed multiplier
 				move *= m_CrouchSpeed;
 
 				// Disable one of the colliders when crouching
-				if (m_CrouchDisableCollider != null)
-					m_CrouchDisableCollider.enabled = false;
+				if (m_CrouchDisableCollider != null) m_CrouchDisableCollider.enabled = false;
 			} else
 			{
 				// Enable the collider when not crouching
-				if (m_CrouchDisableCollider != null)
-					m_CrouchDisableCollider.enabled = true;
+				if (m_CrouchDisableCollider != null) m_CrouchDisableCollider.enabled = true;
 
 				if (m_wasCrouching)
 				{
-					m_wasCrouching = false;
 					OnCrouchEvent.Invoke(false);
 				}
 			}
+			m_wasCrouching = crouch;
 
 			// Move the character by finding the target velocity, 3 different cases:
 			Vector3 targetVelocity = Vector3.zero;
