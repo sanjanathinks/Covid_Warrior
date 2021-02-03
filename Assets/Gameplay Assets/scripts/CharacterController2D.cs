@@ -35,7 +35,6 @@ public class CharacterController2D : MonoBehaviour
 	private float xInput;
 	private bool canWalk;
 	private float jumpStart;
-	private float currentTime;
 	public float jumpLength;
 
 	[Header("Events")]
@@ -68,7 +67,6 @@ public class CharacterController2D : MonoBehaviour
 
 	private void Update() {
 		if (this.gameObject.name.Equals("player")) xInput = Input.GetAxisRaw("Horizontal");
-		currentTime = Time.deltaTime;
 	}
 
 	private void LateUpdate()
@@ -82,12 +80,17 @@ public class CharacterController2D : MonoBehaviour
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
 		{
-			if (!colliders[i].gameObject.name.Equals(gameObject.name))
+			if (!colliders[i].gameObject.name.Equals(gameObject.name) && !colliders[i].usedByEffector)
 			{
 				m_Grounded = true;
-				if (!wasGrounded || currentTime - jumpStart >= jumpLength) {
+				if (!wasGrounded || Time.unscaledTime - jumpStart >= jumpLength) {
 					OnLandEvent.Invoke();
 				}
+			} else if (colliders[i].usedByEffector) {
+				if (Time.unscaledTime - jumpStart >= jumpLength)
+				{ m_Grounded = true;
+				OnLandEvent.Invoke(); }
+
 			}
 		}
 		if (colliders.Length == 0) {
@@ -233,7 +236,7 @@ public class CharacterController2D : MonoBehaviour
 			// Add a vertical force to the player.
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-			jumpStart = currentTime;
+			jumpStart = Time.unscaledTime;
 		}
 	}
 

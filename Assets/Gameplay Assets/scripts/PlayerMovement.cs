@@ -62,9 +62,8 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump")){
            jump = true;
-           animator.SetBool("isJump", true);
            InAir(true);
-        }
+        } else jump = false;
 
         if (Input.GetButtonDown("Crouch")){
            crouch = true;
@@ -74,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
             crouch = false;
         }
       }
-      if (gameIsPaused) {
+      else {
         animator.SetFloat("speed", 0);
         animator.SetBool("isJump", false);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -82,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Onlanding () {
+      Debug.Log("landed");
       animator.SetBool("isJump", false);
       InAir(false);
     }
@@ -102,6 +102,9 @@ public class PlayerMovement : MonoBehaviour
       if (!gameIsPaused) {
         //move character
         controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
+        if (jump) {
+          animator.SetBool("isJump", true);
+        }
         jump = false;
       }
       if (isAttacking && currentMonster!=null) {
