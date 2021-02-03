@@ -4900,7 +4900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec0f144124f574079806e50d12311a40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStartPosition: {x: -80.7, y: 42.5, z: 0}
+  playerStartPosition: {x: -80.67137, y: 32.99363, z: 0}
   playerCheckpoint1: {x: 0, y: 0, z: 0}
   playerCheckpoint2: {x: 0, y: 0, z: 0}
   playerCheckpoint3: {x: 0, y: 0, z: 0}
