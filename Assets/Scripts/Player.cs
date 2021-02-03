@@ -4,6 +4,8 @@ using UnityEngine.Networking;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using TMPro;
+using Cinemachine;
 
 public class Player : MonoBehaviour
 {
@@ -11,12 +13,14 @@ public class Player : MonoBehaviour
     public bool newUser = false;
     public bool downloading = false;
     public int health = 10;
+    public int maxHealth = 10;
 
     private Vector2 _movement;
     private PlayerData _playerData;
     private List<string> qCorrect;
     private List<string> qIncorrect;
     private List<string> qIncorrectRecent;
+    private TextMeshProUGUI error;
 
     void Awake() {
       GameObject[] objs = GameObject.FindGameObjectsWithTag("Player");
@@ -34,6 +38,49 @@ public class Player : MonoBehaviour
         qCorrect = new List<string>();
         qIncorrect = new List<string>();
         qIncorrectRecent = new List<string>();
+    }
+
+    //need this and OnSceneLoaded because object doesn't destroy
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+      SetCameraFollow();
+      GameObject usernameText = GameObject.Find("username");
+      Debug.Log(usernameText);
+
+      if (usernameText!=null && _playerData!=null) {
+        usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
+      }
+
+      if (scene.name.Contains("level")) {
+        if (_playerData.progress.Length > 1) {
+          string location = _playerData.progress.Substring(2, 1);
+          if (location.Equals("1")) {
+            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
+          } else if (location.Equals("2")) {
+            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
+          }
+        }
+        else {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
+        }
+      } else {
+        error = GameObject.Find("ErrorMessage").GetComponent<TextMeshProUGUI>();
+      }
+    }
+
+    private void SetCameraFollow() {
+      foreach (GameObject cam in GameObject.FindGameObjectsWithTag("vcam")) {
+        cam.GetComponent<CinemachineVirtualCamera>().Follow = gameObject.transform;
+        Debug.Log(cam);
+        /**if (!cam.name.Equals("CM vcam1")) {
+          cam.SetActive(false);
+        }*/ //TODO: don't know if need this section - depends on how zoom cameras are handled
+      }
     }
 
     public void answered(string questionID, int correct) {
@@ -58,6 +105,8 @@ public class Player : MonoBehaviour
         Debug.Log(result);
         if (result == null) {
           newUser = true;
+        } else {
+          newUser = false;
         }
       }));
     }
@@ -67,16 +116,18 @@ public class Player : MonoBehaviour
     }
 
     public void signup() {
-      if (newUser && _playerData.class_code != null) {
+      if (newUser && _playerData.class_code.Length > 0) {
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
-          SceneManager.LoadScene("Game");
+          SceneManager.LoadScene("level1");
         }));
       }
       else if (newUser) {
+        error.text = "Please enter a class code.";
         Debug.Log("Please enter a class code.");
       }
       else {
+        error.text = "Username already exists. Please select a different username or log in.";
         Debug.Log("Username already exists. Please select a different username or log in.");
       }
     }
@@ -88,6 +139,7 @@ public class Player : MonoBehaviour
     public void login() {
       StartCoroutine(Download(_playerData.username, result => {
         if (result == null) {
+          error.text = "No registered user with this username. Please sign up or use a different username.";
           Debug.Log("No registered user with this username. Please sign up or use a different username.");
         }
         else {
@@ -95,7 +147,7 @@ public class Player : MonoBehaviour
           qCorrect.AddRange(_playerData.questions_correct);
           qIncorrect.AddRange(_playerData.questions_incorrect);
           Debug.Log(_playerData.Stringify());
-          SceneManager.LoadScene("Game");
+          SceneManager.LoadScene("level" + _playerData.progress.Substring(0,1)); //TODO: change this to be based on player info
         }
       }));
     }

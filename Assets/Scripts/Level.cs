@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Level
+public class Level : MonoBehaviour
 {
     public int level_number;
 
@@ -14,9 +14,9 @@ public class Level
     public int intermediate_incorrect = 0;
     public int advanced_incorrect = 0;
 
-    public Level(int num) {
-      level_number = num;
-    }
+    public Vector3 playerStartPosition;
+    public Vector3 playerCheckpoint1;
+    public Vector3 playerCheckpoint2;
 
     public int getLevelStats(string variableName) {
       return (int)this.GetType().GetField(variableName).GetValue(this);

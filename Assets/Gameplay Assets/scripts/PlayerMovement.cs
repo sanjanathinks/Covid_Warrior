@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController2D controller;
     public Animator animator;
+    public bool isAttacking;
 
     public float runSpeed = 40f;
     float horizontalMove = 0f;
@@ -33,9 +34,12 @@ public class PlayerMovement : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
       main = GameObject.Find("GameObject");
-      attackButton = GameObject.Find("Attack").GetComponent<Button>();
-      attackButton.onClick.AddListener(attack);
-      attackButton.gameObject.SetActive(false);
+      if (GameObject.Find("Attack")!=null) {
+        attackButton = GameObject.Find("Attack").GetComponent<Button>();
+        Debug.Log(attackButton);
+        attackButton.onClick.AddListener(attack);
+        attackButton.gameObject.SetActive(false);
+      }
     }
 
     void Start() {
@@ -57,9 +61,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Crouch")){
            crouch = true;
+           animator.SetBool("isCrouching", true);
         }
+
         else if (Input.GetButtonUp("Crouch")) {
             crouch = false;
+            animator.SetBool("isCrouching", false);
         }
       }
       if (gameIsPaused) {
@@ -72,6 +79,12 @@ public class PlayerMovement : MonoBehaviour
     public void Onlanding () {
       animator.SetBool("isJump", false);
     }
+
+    public void OnCrouching (bool isCrouching)
+    {
+      animator.SetBool("isCrouching", isCrouching);
+    }
+
 
     void FixedUpdate()
     {
@@ -93,11 +106,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     void attack() {
-      main.GetComponent<ChoiceScript>().newQuestion();
-      //TODO: also should play attack animation before pausing, this is why need to do in movement
-      //from what I've seen need to move gameIsPaused into another function and call that from the animation
+      foreach (GameObject monster in GameObject.FindGameObjectsWithTag("monster")) {
+        if (monster.GetComponent<Renderer>().isVisible && !monster.GetComponent<Monster>().isAttacking) {
+          isAttacking = true;
+          main.GetComponent<ChoiceScript>().newQuestion();
+          animator.SetBool("isAttacking", true);
+          attackButton.gameObject.SetActive(false);
+        }
+      }
+    }
+
+    public void attackFinished() {
       gameIsPaused = true;
-      attackButton.gameObject.SetActive(false);
+      animator.SetBool("isAttacking", false);
+      ChoiceScript.animationIsFinished();
+      isAttacking = false;
     }
 
     void LateUpdate() {
