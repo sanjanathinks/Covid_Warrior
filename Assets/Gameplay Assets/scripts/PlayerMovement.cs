@@ -105,7 +105,6 @@ public class PlayerMovement : MonoBehaviour
         if (jump) {
           animator.SetBool("isJump", true);
         }
-        jump = false;
       }
       if (isAttacking && currentMonster!=null) {
         float xDiff = currentMonster.transform.position.x - transform.position.x;

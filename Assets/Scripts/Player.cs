@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
       DontDestroyOnLoad(this.gameObject);
 
       _playerData = new PlayerData();
+      Debug.Log("new player data created");
       qCorrect = new List<string>();
       qIncorrect = new List<string>();
       qIncorrectRecent = new List<string>();
@@ -135,7 +136,7 @@ public class Player : MonoBehaviour
     }
 
     public void signup() {
-      if (newUser && _playerData.class_code.Length > 0) {
+      if (newUser && _playerData.class_code != null && _playerData.class_code.Length > 0) {
         _playerData.progress = "1";
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);

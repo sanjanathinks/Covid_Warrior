@@ -41,6 +41,7 @@ public class Monster : MonoBehaviour
         virtualCam.SetActive(false);
         player.GetComponent<Player>().updateUser(progress);
         player.GetComponent<PlayerMovement>().setBattle(false);
+        PlayerMovement.gameIsPaused = false;
         attack.interactable = false;
         attack.gameObject.SetActive(false);
         healthBar.SetActive(false);
