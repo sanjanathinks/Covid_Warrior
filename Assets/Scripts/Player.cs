@@ -85,6 +85,7 @@ public class Player : MonoBehaviour
     }
 
     public int coinCount() {
+      if (_playerData == null) return 0;
       return _playerData.coins;
     }
 
