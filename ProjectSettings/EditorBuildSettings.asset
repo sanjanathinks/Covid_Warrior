@@ -32,4 +32,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/transition3.unity
     guid: c4147a59cd4a04713ba790f716a829eb
+  - enabled: 1
+    path: Assets/Scenes/PlayerDeath.unity
+    guid: 383e179edc5974ae3b1b08120687af2b
   m_configObjects: {}

@@ -53,6 +53,18 @@ public class Player : MonoBehaviour
       }
     }
 
+    void Update() {
+      if (health <= 0) {
+        playerDeath();
+      }
+    }
+
+    private void playerDeath() {
+      _playerData.progress = _playerData.progress.Substring(0, 1);
+      SceneManager.LoadScene("PlayerDeath");
+      health = 10;
+    }
+
     private void LevelLoaded() {
       SetCameraFollow();
       GameObject usernameText = GameObject.Find("username");
