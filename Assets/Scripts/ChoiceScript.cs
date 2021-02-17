@@ -107,7 +107,7 @@ public class ChoiceScript : MonoBehaviour
         GetComponent<Question>().answeredQuestion(1);
         questionText.text = "That's right! Here's the full solution:";
         foreach(GameObject monster in allMonsters) {
-          if (monster.GetComponent<SpriteRenderer>().isVisible) {
+          if (monster != null && monster.GetComponent<SpriteRenderer>().isVisible) {
             monster.GetComponent<Monster>().health+=-2;
             monsterHealth.GetComponent<HealthBar>().SetHealth(-2);
           }
@@ -162,7 +162,7 @@ public class ChoiceScript : MonoBehaviour
 
       //move monster and player away from each other
       foreach(GameObject monster in allMonsters) {
-        if (monster.GetComponent<SpriteRenderer>().isVisible) {
+        if (monster!= null && monster.GetComponent<SpriteRenderer>().isVisible) {
           float monsterX = monster.transform.position.x;
           float playerX = player.transform.position.x;
 

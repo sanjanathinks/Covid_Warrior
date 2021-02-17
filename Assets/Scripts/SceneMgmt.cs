@@ -39,4 +39,8 @@ public class SceneMgmt : MonoBehaviour
     public void goTo(string scene) {
       SceneManager.LoadScene(scene);
     }
+
+    public void restartLevel() {
+      goTo("level" + GameObject.Find("LevelStats").GetComponent<LevelStats>().level_number);
+    }
 }

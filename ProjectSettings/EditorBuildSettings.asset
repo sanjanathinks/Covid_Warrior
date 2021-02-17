@@ -8,9 +8,15 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Start.unity
     guid: a06d5802c2ff14fe0b63b1b5c397478f
+  - enabled: 0
+    path: Assets/Scenes/Start.unity
+    guid: a06d5802c2ff14fe0b63b1b5c397478f
   - enabled: 1
     path: Assets/Scenes/Signup.unity
     guid: d1426590bf36143a8835a81b30e50498
+  - enabled: 1
+    path: Assets/Scenes/Login.unity
+    guid: 9b067985b69ef4644aba8a2d31a31527
   - enabled: 1
     path: Assets/Scenes/level1.unity
     guid: 80a016cf1ff8b43cba57e186cab92a1a
@@ -29,4 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/transition3.unity
     guid: c4147a59cd4a04713ba790f716a829eb
+  - enabled: 1
+    path: Assets/Scenes/PlayerDeath.unity
+    guid: 383e179edc5974ae3b1b08120687af2b
   m_configObjects: {}
