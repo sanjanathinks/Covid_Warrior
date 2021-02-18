@@ -83,16 +83,4 @@ public class Monster : MonoBehaviour
       ChoiceScript.animationIsFinished();
       isAttacking = false;
     }
-
-    //check distance to player
-    //check time since last question close
-
-    void OnBecameVisible() {
-      //note that this also triggers if you have editor window open and you can see the monster
-      //but it should be fine for actual gameplay
-      virtualCam.SetActive(true);
-      attack.gameObject.SetActive(true);
-      GetComponent<MonsterMove>().enabled = true;
-      healthBar.SetActive(true);
-    }
 }
