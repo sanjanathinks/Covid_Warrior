@@ -8269,7 +8269,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1341932218}
   m_HandleRect: {fileID: 1341932217}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1.0000002
   m_Size: 0.5136587
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -10996,6 +10996,7 @@ MonoBehaviour:
   controller: {fileID: 1945378536}
   animator: {fileID: 1945378537}
   isAttacking: 0
+  attackSprite: {fileID: 21300000, guid: d22c7f547bd044774b25bf5e3489b901, type: 3}
   runSpeed: 40
 --- !u!70 &1945378544
 CapsuleCollider2D:

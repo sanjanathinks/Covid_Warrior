@@ -9595,10 +9595,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 77931898}
   virtualCam: {fileID: 917938388}
-  attack: {fileID: 1564347751}
+  attackButton: {fileID: 1564347751}
   healthBar: {fileID: 150816394}
   isAttacking: 0
   animator: {fileID: 0}
+  questionBackground: {fileID: 1059878688}
+  attackSprite: {fileID: 21300000, guid: 16d67c949d7694e36b611d089f5af739, type: 3}
   health: 10
   maxHealth: 10
   attackTime: 5
@@ -11169,7 +11171,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1900638276}
   m_HandleRect: {fileID: 1900638275}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1.0000002
   m_Size: 0.5136587
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11627,10 +11629,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   main: {fileID: 77931898}
   virtualCam: {fileID: 1220323272}
-  attack: {fileID: 1564347751}
+  attackButton: {fileID: 1564347751}
   healthBar: {fileID: 150816394}
   isAttacking: 0
   animator: {fileID: 1911470254}
+  questionBackground: {fileID: 1059878688}
+  attackSprite: {fileID: 21300000, guid: 862a4dfb724c645b48c380d851896946, type: 3}
   health: 10
   maxHealth: 10
   attackTime: 5
@@ -11933,6 +11937,8 @@ MonoBehaviour:
   controller: {fileID: 1945378536}
   animator: {fileID: 1945378537}
   isAttacking: 0
+  questionBackground: {fileID: 1059878688}
+  attackSprite: {fileID: 21300000, guid: d22c7f547bd044774b25bf5e3489b901, type: 3}
   runSpeed: 40
 --- !u!70 &1945378544
 CapsuleCollider2D:

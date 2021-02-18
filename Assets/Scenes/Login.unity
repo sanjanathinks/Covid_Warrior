@@ -947,6 +947,7 @@ MonoBehaviour:
   controller: {fileID: 1366158965}
   animator: {fileID: 1366158966}
   isAttacking: 0
+  attackSprite: {fileID: 21300000, guid: d22c7f547bd044774b25bf5e3489b901, type: 3}
   runSpeed: 40
 --- !u!114 &1366158965
 MonoBehaviour:

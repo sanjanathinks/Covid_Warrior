@@ -10724,7 +10724,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1131654300
 GameObject:
@@ -13642,7 +13642,7 @@ Transform:
   m_LocalScale: {x: 3, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1453646784
 GameObject:
@@ -16766,7 +16766,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1153663223}
   m_HandleRect: {fileID: 1153663222}
   m_Direction: 2
-  m_Value: 1.0000001
+  m_Value: 1.0000002
   m_Size: 0.5136587
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -17159,7 +17159,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -17192,7 +17191,7 @@ SpriteRenderer:
   m_Size: {x: 27.324455, y: 20.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1844613253
@@ -17207,7 +17206,7 @@ Transform:
   m_LocalScale: {x: 1.4496385, y: 1.4951041, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1850446005
 GameObject:
@@ -18013,6 +18012,7 @@ MonoBehaviour:
   controller: {fileID: 1945378536}
   animator: {fileID: 1945378537}
   isAttacking: 0
+  attackSprite: {fileID: 21300000, guid: d22c7f547bd044774b25bf5e3489b901, type: 3}
   runSpeed: 40
 --- !u!70 &1945378544
 CapsuleCollider2D:
