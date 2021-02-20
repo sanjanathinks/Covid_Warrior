@@ -10,6 +10,7 @@ public class Switch_Priority : MonoBehaviour
     //[SerializeField]
     public CinemachineVirtualCamera vcam2; //CM vcam2
 
+<<<<<<< HEAD
     //private bool in_vcam1 = true;
 
     /*
@@ -21,10 +22,24 @@ public class Switch_Priority : MonoBehaviour
     void OnTriggerEnter2D(Collider2D col)
     {
         //Renderer render = GetComponent<Renderer>();
+=======
+    void OnTriggerEnter2D(Collider2D col)
+    {
+>>>>>>> gin1/15/21
         if(col.gameObject.tag.Equals("Player")) {
             vcam1.Priority = 0;
             vcam2.Priority = 1;
         }
+<<<<<<< HEAD
+=======
+    }
+
+    void OnTriggerExit2D(Collider2D col) {
+         if(col.gameObject.tag.Equals("Player")) {
+            vcam1.Priority = 1;
+            vcam2.Priority = 0;
+         }
+>>>>>>> gin1/15/21
     }
     
     void OnTriggerExit2D(Collider2D col) {

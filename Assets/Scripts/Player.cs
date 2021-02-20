@@ -30,14 +30,12 @@ public class Player : MonoBehaviour
           Destroy(this.gameObject);
       }
       DontDestroyOnLoad(this.gameObject);
-    }
 
-    void Start()
-    {
-        _playerData = new PlayerData();
-        qCorrect = new List<string>();
-        qIncorrect = new List<string>();
-        qIncorrectRecent = new List<string>();
+      _playerData = new PlayerData();
+      Debug.Log("new player data created");
+      qCorrect = new List<string>();
+      qIncorrect = new List<string>();
+      qIncorrectRecent = new List<string>();
     }
 
     //need this and OnSceneLoaded because object doesn't destroy
@@ -48,28 +46,44 @@ public class Player : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+      if (scene.name.Contains("level")) {
+        LevelLoaded();
+      } else {
+        error = GameObject.Find("ErrorMessage").GetComponent<TextMeshProUGUI>();
+      }
+    }
+
+    void Update() {
+      if (health <= 0) {
+        playerDeath();
+      }
+    }
+
+    private void playerDeath() {
+      _playerData.progress = _playerData.progress.Substring(0, 1);
+      SceneManager.LoadScene("PlayerDeath");
+      health = 10;
+    }
+
+    private void LevelLoaded() {
       SetCameraFollow();
       GameObject usernameText = GameObject.Find("username");
-      Debug.Log(usernameText);
-
       if (usernameText!=null && _playerData!=null) {
         usernameText.GetComponent<TextMeshProUGUI>().text = _playerData.username;
       }
 
-      if (scene.name.Contains("level")) {
-        if (_playerData.progress.Length > 1) {
-          string location = _playerData.progress.Substring(2, 1);
-          if (location.Equals("1")) {
-            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
-          } else if (location.Equals("2")) {
-            transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
-          }
+      if (_playerData.progress!=null && _playerData.progress.Length > 1) {
+        string location = _playerData.progress.Substring(2, 1);
+        if (location.Equals("1")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint1;
+        } else if (location.Equals("2")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint2;
+        } else if (location.Equals("3")) {
+          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerCheckpoint3;
         }
-        else {
-          transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
-        }
-      } else {
-        error = GameObject.Find("ErrorMessage").GetComponent<TextMeshProUGUI>();
+      }
+      else {
+        transform.position = GameObject.Find("GameObject").GetComponent<Level>().playerStartPosition;
       }
     }
 
@@ -81,6 +95,15 @@ public class Player : MonoBehaviour
           cam.SetActive(false);
         }*/ //TODO: don't know if need this section - depends on how zoom cameras are handled
       }
+    }
+
+    public int coinCount() {
+      if (_playerData == null) return 0;
+      return _playerData.coins;
+    }
+
+    public void coinCount(int add) {
+      _playerData.coins+=add;
     }
 
     public void answered(string questionID, int correct) {
@@ -99,6 +122,11 @@ public class Player : MonoBehaviour
       }));
     }
 
+    public void updateUser(string prog) {
+      _playerData.progress = prog;
+      updateUser();
+    }
+
     public void chooseUsername(string username) {
       _playerData.username = username;
       StartCoroutine(Download(_playerData.username, result => {
@@ -115,8 +143,13 @@ public class Player : MonoBehaviour
       _playerData.class_code = classCode;
     }
 
+    public string getProgress() {
+      return _playerData.progress;
+    }
+
     public void signup() {
-      if (newUser && _playerData.class_code.Length > 0) {
+      if (newUser && _playerData.class_code != null && _playerData.class_code.Length > 0) {
+        _playerData.progress = "1";
         StartCoroutine(Upload(_playerData.Stringify(), added => {
           Debug.Log(added);
           SceneManager.LoadScene("level1");
@@ -207,6 +240,7 @@ public class Player : MonoBehaviour
             }
             else if (callback != null)
             {
+              Debug.Log(request.downloadHandler.text);
                 callback.Invoke(PlayerData.Parse(request.downloadHandler.text));
             }
           }

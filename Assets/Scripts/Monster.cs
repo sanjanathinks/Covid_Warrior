@@ -13,10 +13,12 @@ public class Monster : MonoBehaviour
     public Button attack;
     public GameObject healthBar;
     public bool isAttacking;
+    public Animator animator;
 
     public int health = 10;
     public int maxHealth = 10;
     public float attackTime; //time player has been in range of monster attack
+    public string progress;
 
     private GameObject player;
 
@@ -26,13 +28,20 @@ public class Monster : MonoBehaviour
       healthBar.SetActive(false);
     }
 
+    void Start() {
+      if (player.GetComponent<Player>().getProgress()!=null && player.GetComponent<Player>().getProgress().CompareTo(progress) >= 0) {
+        Destroy(this.gameObject);
+      }
+    }
+
     // Update is called once per frame
     void Update()
     {
       if (health <= 0) {
         virtualCam.SetActive(false);
-        player.GetComponent<Player>().updateUser();
+        player.GetComponent<Player>().updateUser(progress);
         player.GetComponent<PlayerMovement>().setBattle(false);
+        PlayerMovement.gameIsPaused = false;
         attack.interactable = false;
         attack.gameObject.SetActive(false);
         healthBar.SetActive(false);
@@ -57,9 +66,9 @@ public class Monster : MonoBehaviour
           if (timeInRange > attackTime && !PlayerMovement.gameIsPaused && !player.GetComponent<PlayerMovement>().isAttacking) {
             isAttacking = true;
             attack.gameObject.SetActive(false);
-            //TODO: play monster attack animation, when finished, call attackFinished()
+            animator.SetBool("isAttacking", true);
             main.GetComponent<ChoiceScript>().newQuestion();
-            attackFinished();
+            PlayerMovement.gameIsPaused = true;
           }
         }
         else {
@@ -70,7 +79,7 @@ public class Monster : MonoBehaviour
     }
 
     public void attackFinished() {
-      PlayerMovement.gameIsPaused = true;
+      animator.SetBool("isAttacking", false);
       ChoiceScript.animationIsFinished();
       isAttacking = false;
     }

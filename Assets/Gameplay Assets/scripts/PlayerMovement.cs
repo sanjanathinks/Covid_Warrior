@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private float height;
     private GameObject main;
     private Button attackButton;
+    private GameObject currentMonster;
 
     //need this and OnSceneLoaded because object doesn't destroy
     void OnEnable()
@@ -36,7 +37,6 @@ public class PlayerMovement : MonoBehaviour
       main = GameObject.Find("GameObject");
       if (GameObject.Find("Attack")!=null) {
         attackButton = GameObject.Find("Attack").GetComponent<Button>();
-        Debug.Log(attackButton);
         attackButton.onClick.AddListener(attack);
         attackButton.gameObject.SetActive(false);
       }
@@ -45,6 +45,12 @@ public class PlayerMovement : MonoBehaviour
     void Start() {
       width = GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
       height = GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of height / 2
+      AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+      foreach(AnimationClip clip in clips) {
+        if (clip.name.Equals("player_jump")) {
+          controller.jumpLength = clip.length;
+        }
+      }
     }
 
     void Update()
@@ -56,20 +62,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Jump")){
            jump = true;
-           animator.SetBool("isJump", true);
-        }
+           InAir(true);
+        } else jump = false;
 
         if (Input.GetButtonDown("Crouch")){
            crouch = true;
            animator.SetBool("isCrouching", true);
         }
-
         else if (Input.GetButtonUp("Crouch")) {
             crouch = false;
-            animator.SetBool("isCrouching", false);
         }
       }
-      if (gameIsPaused) {
+      else {
         animator.SetFloat("speed", 0);
         animator.SetBool("isJump", false);
         GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -77,21 +81,34 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void Onlanding () {
+      Debug.Log("landed");
       animator.SetBool("isJump", false);
+      InAir(false);
     }
 
     public void OnCrouching (bool isCrouching)
     {
+      Debug.Log("crouch " + isCrouching);
       animator.SetBool("isCrouching", isCrouching);
     }
 
+    public void InAir(bool inAir)
+    {
+      animator.SetBool("inAir", inAir);
+    }
 
     void FixedUpdate()
     {
       if (!gameIsPaused) {
         //move character
         controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
-        jump = false;
+        if (jump) {
+          animator.SetBool("isJump", true);
+        }
+      }
+      if (isAttacking && currentMonster!=null) {
+        float xDiff = currentMonster.transform.position.x - transform.position.x;
+        controller.Flip(xDiff > 0);
       }
     }
 
@@ -108,16 +125,17 @@ public class PlayerMovement : MonoBehaviour
     void attack() {
       foreach (GameObject monster in GameObject.FindGameObjectsWithTag("monster")) {
         if (monster.GetComponent<Renderer>().isVisible && !monster.GetComponent<Monster>().isAttacking) {
+          currentMonster = monster;
           isAttacking = true;
           main.GetComponent<ChoiceScript>().newQuestion();
           animator.SetBool("isAttacking", true);
           attackButton.gameObject.SetActive(false);
+          gameIsPaused = true;
         }
       }
     }
 
     public void attackFinished() {
-      gameIsPaused = true;
       animator.SetBool("isAttacking", false);
       ChoiceScript.animationIsFinished();
       isAttacking = false;
