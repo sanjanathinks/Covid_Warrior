@@ -77,15 +77,15 @@ public class ChoiceScript : MonoBehaviour
         questionImage.sprite = questionSprite;
       }
       else {
-        questionScroll.sizeDelta = new Vector2(1000, 260);
-        questionScrollbar.sizeDelta = new Vector2(20, 260);
+        questionScroll.sizeDelta = new Vector2(1000, 220);
+        questionScrollbar.sizeDelta = new Vector2(20, 220);
       }
       Debug.Log(questionSprite);
       //if no image, want text to be bigger while question is up then need change after answer
-      aText.text = GetComponent<Question>()._questionData.a;
-      bText.text = GetComponent<Question>()._questionData.b;
-      cText.text = GetComponent<Question>()._questionData.c;
-      dText.text = GetComponent<Question>()._questionData.d;
+      aText.text = "A. " + GetComponent<Question>()._questionData.a;
+      bText.text = "B. " + GetComponent<Question>()._questionData.b;
+      cText.text = "C. " + GetComponent<Question>()._questionData.c;
+      dText.text = "D. " + GetComponent<Question>()._questionData.d;
       solutionText.text = GetComponent<Question>()._questionData.solution;
       solutionSprite = Resources.Load<Sprite>("images/" + GetComponent<Question>()._questionData.img_s);
 
