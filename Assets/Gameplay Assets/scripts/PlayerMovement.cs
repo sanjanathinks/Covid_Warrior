@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public CharacterController2D controller;
     public Animator animator;
     public bool isAttacking;
+    public Sprite attackSprite;
 
     public float runSpeed = 40f;
     float horizontalMove = 0f;
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     private float height;
     private GameObject main;
     private Button attackButton;
+    private Image questionBackground;
     private GameObject currentMonster;
 
     //need this and OnSceneLoaded because object doesn't destroy
@@ -39,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
         attackButton = GameObject.Find("Attack").GetComponent<Button>();
         attackButton.onClick.AddListener(attack);
         attackButton.gameObject.SetActive(false);
+      }
+      if (GameObject.Find("UI board Large Set")!=null) {
+        questionBackground = GameObject.Find("UI board Large Set").GetComponent<Image>();
       }
     }
 
@@ -129,7 +134,11 @@ public class PlayerMovement : MonoBehaviour
           isAttacking = true;
           main.GetComponent<ChoiceScript>().newQuestion();
           animator.SetBool("isAttacking", true);
+
+          //UI elements
           attackButton.gameObject.SetActive(false);
+          questionBackground.sprite = attackSprite;
+
           gameIsPaused = true;
         }
       }

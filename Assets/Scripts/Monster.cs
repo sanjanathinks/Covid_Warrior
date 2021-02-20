@@ -10,10 +10,12 @@ public class Monster : MonoBehaviour
 
     public GameObject main;
     public GameObject virtualCam;
-    public Button attack;
+    public Button attackButton;
     public GameObject healthBar;
     public bool isAttacking;
     public Animator animator;
+    public Image questionBackground;
+    public Sprite attackSprite;
 
     public int health = 10;
     public int maxHealth = 10;
@@ -24,7 +26,7 @@ public class Monster : MonoBehaviour
 
     void Awake() {
       player = GameObject.Find("player");
-      attack.interactable = false;
+      attackButton.interactable = false;
       healthBar.SetActive(false);
     }
 
@@ -42,8 +44,8 @@ public class Monster : MonoBehaviour
         player.GetComponent<Player>().updateUser(progress);
         player.GetComponent<PlayerMovement>().setBattle(false);
         PlayerMovement.gameIsPaused = false;
-        attack.interactable = false;
-        attack.gameObject.SetActive(false);
+        attackButton.interactable = false;
+        attackButton.gameObject.SetActive(false);
         healthBar.SetActive(false);
         Destroy(this.gameObject);
       }
@@ -58,22 +60,18 @@ public class Monster : MonoBehaviour
       if (GetComponent<Renderer>().isVisible) {
         float dist = Vector3.Distance(player.transform.position, transform.position);
         if (dist <= 10.0f) {
-          attack.interactable = true;
-          attack.GetComponentInChildren<TextMeshProUGUI>().text = "Attack";
+          attackButton.interactable = true;
+          attackButton.GetComponentInChildren<TextMeshProUGUI>().text = "Attack";
           timeInRange+=Time.fixedDeltaTime;
 
-          //if it's been enough time and it's close, monster should attack
+          //if it's been enough time and it's close to player, monster should attack
           if (timeInRange > attackTime && !PlayerMovement.gameIsPaused && !player.GetComponent<PlayerMovement>().isAttacking) {
-            isAttacking = true;
-            attack.gameObject.SetActive(false);
-            animator.SetBool("isAttacking", true);
-            main.GetComponent<ChoiceScript>().newQuestion();
-            PlayerMovement.gameIsPaused = true;
+            Attack();
           }
         }
         else {
-          attack.interactable = false;
-          attack.GetComponentInChildren<TextMeshProUGUI>().text = "Move closer to attack";
+          attackButton.interactable = false;
+          attackButton.GetComponentInChildren<TextMeshProUGUI>().text = "Move closer to attack";
         }
       }
     }
@@ -84,15 +82,16 @@ public class Monster : MonoBehaviour
       isAttacking = false;
     }
 
-    //check distance to player
-    //check time since last question close
+    private void Attack() {
+      isAttacking = true;
 
-    void OnBecameVisible() {
-      //note that this also triggers if you have editor window open and you can see the monster
-      //but it should be fine for actual gameplay
-      virtualCam.SetActive(true);
-      attack.gameObject.SetActive(true);
-      GetComponent<MonsterMove>().enabled = true;
-      healthBar.SetActive(true);
+      //UI elements
+      attackButton.gameObject.SetActive(false);
+      questionBackground.sprite = attackSprite;
+
+      animator.SetBool("isAttacking", true);
+
+      main.GetComponent<ChoiceScript>().newQuestion();
+      PlayerMovement.gameIsPaused = true; //stop movement
     }
 }
