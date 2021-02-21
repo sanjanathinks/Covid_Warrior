@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     float horizontalMove = 0f;
     bool jump = false;
     bool crouch = false;
-    bool battle = false;
+    public bool battle = false;
     Vector3 screenBounds;
     Vector3 screenPosition;
 
