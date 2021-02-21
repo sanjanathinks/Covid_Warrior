@@ -9133,6 +9133,7 @@ MonoBehaviour:
   maxHealth: 10
   attackTime: 5
   progress: 1.2
+  cameraToMainAfter: 1
 --- !u!50 &1506175917
 Rigidbody2D:
   serializedVersion: 4
@@ -11011,6 +11012,7 @@ MonoBehaviour:
   maxHealth: 10
   attackTime: 5
   progress: 1.1
+  cameraToMainAfter: 1
 --- !u!70 &1911470252
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -11311,6 +11313,7 @@ MonoBehaviour:
   isAttacking: 0
   attackSprite: {fileID: 21300000, guid: d22c7f547bd044774b25bf5e3489b901, type: 3}
   runSpeed: 40
+  battle: 0
 --- !u!70 &1945378544
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

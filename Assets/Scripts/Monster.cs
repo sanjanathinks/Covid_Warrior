@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Cinemachine;
 
 public class Monster : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class Monster : MonoBehaviour
     public int maxHealth = 10;
     public float attackTime; //time player has been in range of monster attack
     public string progress;
+    public bool cameraToMainAfter;
 
     private GameObject player;
 
@@ -40,7 +42,12 @@ public class Monster : MonoBehaviour
     void Update()
     {
       if (health <= 0) {
-        virtualCam.SetActive(false);
+        if (cameraToMainAfter) {
+          virtualCam.SetActive(false);
+        }
+        else {
+          virtualCam.GetComponent<CinemachineVirtualCamera>().Follow = player.transform;
+        }
         player.GetComponent<Player>().updateUser(progress);
         player.GetComponent<PlayerMovement>().setBattle(false);
         PlayerMovement.gameIsPaused = false;
